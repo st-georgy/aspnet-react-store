@@ -7,7 +7,6 @@ namespace aspnet_react_store.Server.DataLayer.Entities.Configurations {
     public class OrderConfiguration : IEntityTypeConfiguration<Order> {
         public void Configure(EntityTypeBuilder<Order> builder) {
             builder.Property(o => o.OrderStatus)
-                    .HasConversion<string>()
                     .HasDefaultValue(OrderStatusEnum.Pending);
 
             builder.HasMany(o => o.Products)
