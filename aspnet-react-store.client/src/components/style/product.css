@@ -1,0 +1,39 @@
+.product-block {
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.product-name {
+    transition: text-decoration 0.3s ease-in-out;
+}
+
+.product-block:hover .product-name {
+    text-decoration: underline;
+}
+
+.image-container {
+    position: relative;
+    display: inline-block;
+    overflow: hidden;
+}
+
+.image-container img {
+    display: block;
+    transition: transform 0.3s ease-out;
+}
+
+.image-container::before {
+    content: '';
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    bottom: 5px;
+    left: 5px;
+    border: 2px solid transparent;
+    pointer-events: none;
+}
+
+.product-block:hover img {
+    transform: scale(1.1);
+}
