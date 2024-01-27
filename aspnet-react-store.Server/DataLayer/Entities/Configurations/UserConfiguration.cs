@@ -8,6 +8,8 @@ namespace aspnet_react_store.Server.DataLayer.Entities.Configurations {
         public void Configure(EntityTypeBuilder<User> builder) {
             builder.Property(u => u.AccountType)
                     .HasDefaultValue(AccountTypeEnum.User);
+
+            builder.HasAlternateKey(u => u.UserName);
         }
     }
 }

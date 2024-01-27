@@ -1,7 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using aspnet_react_store.Server.Entities;
 using aspnet_react_store.Server.DataLayer.Entities.Configurations;
-using Npgsql;
 using aspnet_react_store.Server.Entities.Enums;
 
 namespace aspnet_react_store.Server {
@@ -26,6 +25,53 @@ namespace aspnet_react_store.Server {
             modelBuilder.ApplyConfiguration(new UserConfiguration());
             modelBuilder.ApplyConfiguration(new OrderConfiguration());
             modelBuilder.ApplyConfiguration(new CartConfiguration());
+            modelBuilder.ApplyConfiguration(new UserInfoConfiguration());
+
+            LoadInitialData(modelBuilder);
+        }
+
+        public override int SaveChanges()
+        {
+            // When User Entity added to Database - create UserInfo and Cart
+            foreach(var entry in ChangeTracker.Entries<User>()) {
+                if (entry.State == EntityState.Added) {
+                    entry.Entity.UserInfo = new UserInfo();
+                    entry.Entity.Cart = new Cart();
+                }
+            }
+            
+            return base.SaveChanges();
+        }
+
+        private static void LoadInitialData(ModelBuilder modelBuilder) {
+            var users = new[] {
+                new User { Id = 1, UserName = "admin", AccountType = AccountTypeEnum.Admin, PasswordHash = "63a9f0ea7bb98050796b649e85481845" },
+                new User { Id = 2, UserName = "support", AccountType = AccountTypeEnum.Support, PasswordHash = "434990c8a25d2be94863561ae98bd682" },
+                new User { Id = 3, UserName = "user", PasswordHash = "ee11cbb19052e40b07aac0ca060c23ee" },
+            };
+            modelBuilder.Entity<User>().HasData(users);
+
+            var userInfos = new[] {
+                new UserInfo { Id = 1, UserId = 1 },
+                new UserInfo { Id = 2, UserId = 2 },
+                new UserInfo { Id = 3, UserId = 3 },
+            };
+            modelBuilder.Entity<UserInfo>().HasData(userInfos);
+
+            var carts = new[] {
+                new Cart { Id = 1, UserId = 1 },
+                new Cart { Id = 2, UserId = 2 },
+                new Cart { Id = 3, UserId = 3 },
+            };
+            modelBuilder.Entity<Cart>().HasData(carts);
+
+            var products = new[] {
+                new Product { Id = 1, Name = "T-Shirt", Price = 2300},
+                new Product { Id = 2, Name = "Jeans", Price = 4900},
+                new Product { Id = 3, Name = "Pants", Price = 5100},
+                new Product { Id = 4, Name = "Socks", Price = 1300},
+            };
+            modelBuilder.Entity<Product>().HasData(products);
         }
     }
 }
