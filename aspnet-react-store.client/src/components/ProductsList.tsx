@@ -10,7 +10,8 @@ export default function ProductsList() {
   const [productIndex, setProductIndex] = useState<number>(1);
 
   useEffect(() => {
-    loadProducts(productIndex, setProductIndex, setProducts);
+    setProducts([]);
+    loadProducts(1, setProductIndex, setProducts);
   }, []);
 
   const loadButtonClick = async (): Promise<void> => {
@@ -31,7 +32,7 @@ export default function ProductsList() {
             {rowProducts.map((product, index) => (
               <Product
                 product={product}
-                index={rowIndex + index}
+                index={rowIndex * index}
                 key={product.id}
               />
             ))}
@@ -41,7 +42,7 @@ export default function ProductsList() {
 
       <div className='text-center'>
         <Button
-          variant='dark'
+          variant='outline-dark'
           style={{ width: 250, border: 'none' }}
           onClick={loadButtonClick}
         >
