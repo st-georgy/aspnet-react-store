@@ -2,12 +2,15 @@
 using Microsoft.EntityFrameworkCore;
 using Npgsql;
 
-namespace aspnet_react_store.Server {
-    public class Startup(IConfiguration configuration) {
+namespace aspnet_react_store.Server
+{
+    public class Startup(IConfiguration configuration)
+    {
 
         public IConfiguration Configuration { get; } = configuration;
 
-        public void ConfigureServices(IServiceCollection services) {
+        public void ConfigureServices(IServiceCollection services)
+        {
             services.AddControllers();
 
             var dataSourceBuilder = new NpgsqlDataSourceBuilder(Configuration.GetConnectionString("PostgresConnection"));
@@ -18,14 +21,16 @@ namespace aspnet_react_store.Server {
             services.AddDbContext<StoreDbContext>(options => options.UseNpgsql(dataSource));
         }
 
-        public void Configure(IApplicationBuilder app, StoreDbContext dbContext) {
+        public void Configure(IApplicationBuilder app, StoreDbContext dbContext)
+        {
             app.UseHttpsRedirection();
 
             app.UseRouting();
 
             app.UseAuthorization();
 
-            app.UseEndpoints(endpoints => {
+            app.UseEndpoints(endpoints =>
+            {
                 endpoints.MapControllers();
             });
 

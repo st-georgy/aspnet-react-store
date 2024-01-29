@@ -1,5 +1,7 @@
-namespace aspnet_react_store.Server.Entities {
-    public class Product {
+namespace aspnet_react_store.Server.Entities
+{
+    public class Product
+    {
         public int Id { get; set; }
         public string Name { get; set; } = null!;
         public decimal Price { get; set; }

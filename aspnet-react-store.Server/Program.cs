@@ -1,6 +1,8 @@
-namespace aspnet_react_store.Server {
+namespace aspnet_react_store.Server
+{
 
-    public class Program {
+    public class Program
+    {
         public static void Main(string[] args) => CreateHostBuilder(args).Build().Run();
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>

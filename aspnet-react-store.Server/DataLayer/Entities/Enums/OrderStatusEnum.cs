@@ -1,5 +1,7 @@
-namespace aspnet_react_store.Server.Entities.Enums {
-    public enum OrderStatusEnum {
+namespace aspnet_react_store.Server.Entities.Enums
+{
+    public enum OrderStatusEnum
+    {
         Pending,
         Cancelled,
         Declined,

@@ -1,45 +1,45 @@
 .product-block {
-    position: relative;
-    overflow: hidden;
-    cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
 }
 
 .product-name {
-    transition: text-decoration 0.3s ease-in-out;
+  transition: text-decoration 0.3s ease-in-out;
 }
 
 .product-block:hover .product-name {
-    text-decoration: underline;
+  text-decoration: underline;
 }
 
 .image-container {
-    position: relative;
-    display: inline-block;
-    overflow: hidden;
-    width: 250px;
+  position: relative;
+  display: inline-block;
+  overflow: hidden;
+  width: 250px;
 }
 
 .card {
-    border: none !important;
+  border: none !important;
 }
 
 .image-container img {
-    width: 230px;
-    display: block;
-    transition: transform 0.3s ease-out;
+  width: 230px;
+  display: block;
+  transition: transform 0.3s ease-out;
 }
 
 .image-container::before {
-    content: '';
-    position: absolute;
-    top: 5px;
-    right: 5px;
-    bottom: 5px;
-    left: 5px;
-    border: 2px solid transparent;
-    pointer-events: none;
+  content: "";
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  bottom: 5px;
+  left: 5px;
+  border: 2px solid transparent;
+  pointer-events: none;
 }
 
 .product-block:hover img {
-    transform: scale(1.05);
+  transform: scale(1.05);
 }

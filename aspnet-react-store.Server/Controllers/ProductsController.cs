@@ -2,16 +2,20 @@ using aspnet_react_store.Server.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
-namespace aspnet_react_store.Server.Controllers {
+namespace aspnet_react_store.Server.Controllers
+{
 
     [ApiController]
     [Route("api/[controller]")]
-    public class ProductsController(StoreDbContext context) : ControllerBase {
+    public class ProductsController(StoreDbContext context) : ControllerBase
+    {
         private readonly StoreDbContext _context = context;
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Product>>> GetProducts([FromQuery] int? startId, [FromQuery] int? count) {
-            if (!startId.HasValue || !count.HasValue) {
+        public async Task<ActionResult<IEnumerable<Product>>> GetProducts([FromQuery] int? startId, [FromQuery] int? count)
+        {
+            if (!startId.HasValue || !count.HasValue)
+            {
                 var allProducts = await _context.Products.ToListAsync();
                 return Ok(allProducts);
             }

@@ -3,9 +3,12 @@ using aspnet_react_store.Server.Entities.Enums;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace aspnet_react_store.Server.DataLayer.Entities.Configurations {
-    public class OrderConfiguration : IEntityTypeConfiguration<Order> {
-        public void Configure(EntityTypeBuilder<Order> builder) {
+namespace aspnet_react_store.Server.DataLayer.Entities.Configurations
+{
+    public class OrderConfiguration : IEntityTypeConfiguration<Order>
+    {
+        public void Configure(EntityTypeBuilder<Order> builder)
+        {
             builder.Property(o => o.OrderStatus)
                     .HasDefaultValue(OrderStatusEnum.Pending);
 
