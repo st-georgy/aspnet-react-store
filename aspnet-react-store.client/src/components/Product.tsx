@@ -16,9 +16,8 @@ export default function Product({ product, index }: { product: IProduct, index: 
     return (
         <Col key={index} className="mb-4">
             <animated.div style={trail[index]} className="product-block d-flex justify-content-around">
-                <Card style={{width: 250}} className="image-container">
+                <Card className="image-container">
                     <ProductImages />
-                    <hr style={{margin: "0"}}/>
                     <Card.Body>
                         <Card.Title className="product-name">
                             {product?.name}

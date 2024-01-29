@@ -1,9 +1,7 @@
 :root {
     margin: 40px;
-    font-size: 20px;
-    font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+    font-size: 16px;
     line-height: 1.5;
-    font-weight: 400;
     font-synthesis: none;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
