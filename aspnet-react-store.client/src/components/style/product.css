@@ -16,7 +16,7 @@
   position: relative;
   display: inline-block;
   overflow: hidden;
-  width: 250px;
+  width: 230px;
 }
 
 .card {
@@ -30,7 +30,7 @@
 }
 
 .image-container::before {
-  content: "";
+  content: '';
   position: absolute;
   top: 5px;
   right: 5px;

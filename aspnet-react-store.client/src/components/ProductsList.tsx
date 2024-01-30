@@ -1,13 +1,15 @@
 import { useEffect, useState } from 'react';
 import { Button, Container, Row } from 'react-bootstrap';
 import { CiRepeat } from 'react-icons/ci';
-import { IProduct } from '../models/models';
+import { IProduct } from '../types/types';
 import { loadProducts } from '../utils/apiUtils';
 import Product from './Product';
 
 export default function ProductsList() {
   const [products, setProducts] = useState<IProduct[]>([]);
   const [productIndex, setProductIndex] = useState<number>(1);
+  const [isLoadButtonVisible, setIsLoadButtonVisible] = useState<boolean>(true);
+  const [fetchCount, setFetchCount] = useState<number>(1);
 
   useEffect(() => {
     setProducts([]);
@@ -15,7 +17,12 @@ export default function ProductsList() {
   }, []);
 
   const loadButtonClick = async (): Promise<void> => {
-    await loadProducts(productIndex, setProductIndex, setProducts);
+    await loadProducts(productIndex, setProductIndex, setProducts).then(
+      (code) => {
+        setFetchCount(fetchCount + 1);
+        if (code === -1) setIsLoadButtonVisible(false);
+      }
+    );
   };
 
   const productsInRows = [];
@@ -32,7 +39,9 @@ export default function ProductsList() {
             {rowProducts.map((product, index) => (
               <Product
                 product={product}
-                index={rowIndex * index}
+                // FIXME: анимация продуктов в первоначальной загрузке верна,
+                // но в последующих все продукты отображатся одновременно (без trail) и дольше
+                index={Math.round((rowIndex * 4 + index) / fetchCount)}
                 key={product.id}
               />
             ))}
@@ -40,16 +49,18 @@ export default function ProductsList() {
         ))}
       </Container>
 
-      <div className='text-center'>
-        <Button
-          variant='outline-dark'
-          style={{ width: 250, border: 'none' }}
-          onClick={loadButtonClick}
-        >
-          Загрузить еще&nbsp;&nbsp;
-          <CiRepeat size={25} />
-        </Button>
-      </div>
+      {isLoadButtonVisible && (
+        <div className='text-center'>
+          <Button
+            variant='outline-dark'
+            style={{ width: 250, border: 'none' }}
+            onClick={loadButtonClick}
+          >
+            Загрузить еще&nbsp;&nbsp;
+            <CiRepeat size={25} />
+          </Button>
+        </div>
+      )}
     </>
   );
 }

@@ -88,7 +88,7 @@ namespace aspnet_react_store.Server
 
             for (var i = 1; i < 100; i++)
             {
-                var productName = product_first_names[random.Next(0, product_first_names.Length)] +
+                var productName = product_first_names[random.Next(0, product_first_names.Length)] + " " +
                                     product_second_names[random.Next(0, product_second_names.Length)];
                 var product = new Product { Id = i, Name = productName, Price = random.Next(1000, 10000) };
                 products.Add(product);

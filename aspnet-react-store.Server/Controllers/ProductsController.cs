@@ -12,23 +12,39 @@ namespace aspnet_react_store.Server.Controllers
         private readonly StoreDbContext _context = context;
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Product>>> GetProducts([FromQuery] int? startId, [FromQuery] int? count)
+        public async Task<ActionResult<IEnumerable<Product>>> GetProducts([FromQuery] int? startId, [FromQuery] int? count, [FromQuery] string? searchText)
         {
-            if (!startId.HasValue || !count.HasValue)
+            var query = _context.Products.AsQueryable();
+
+            if (!string.IsNullOrWhiteSpace(searchText))
             {
-                var allProducts = await _context.Products.ToListAsync();
-                return Ok(allProducts);
+                var searchTerms = searchText.ToLower().Split(' ', StringSplitOptions.RemoveEmptyEntries);
+
+                query = query.Where(p =>
+                    p.Name.ToLower().Equals(searchText)
+                        || searchTerms.Any(term =>
+                            p.Name.ToLower().Contains(term)));
             }
+
+            if (!startId.HasValue || !count.HasValue)
+                return Ok(await query.ToListAsync());
 
             if (startId < 1 || count < 1)
                 return BadRequest("Invalid arguments (startId or count)");
 
-            var products = await _context.Products
-                                .Where(p => p.Id >= startId)
-                                .Take(count.Value)
-                                .ToListAsync();
+            var maxProductId = await _context.Products.MaxAsync(p => (int?)p.Id) ?? 0;
 
-            return Ok(products);
+            if (startId > maxProductId)
+                return BadRequest("startId exceeds the maximum Id in the database");
+
+            query = query
+                .OrderBy(p => p.Id)
+                .Where(p => p.Id >= startId)
+                .Take(count.Value);
+
+            var result = await query.ToListAsync();
+
+            return Ok(result);
         }
     }
 }

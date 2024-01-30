@@ -1,6 +1,6 @@
 import { Card, Col } from 'react-bootstrap';
-import { animated, config, useTrail } from 'react-spring';
-import { IProduct } from '../models/models';
+import { animated, useTrail } from 'react-spring';
+import { IProduct } from '../types/types';
 import ProductImages from './ProductImages';
 import './style/product.css';
 
@@ -15,7 +15,6 @@ export default function Product({
     opacity: 1,
     y: 0,
     from: { opacity: 0, y: 20 },
-    config: config.gentle,
   });
 
   return (
