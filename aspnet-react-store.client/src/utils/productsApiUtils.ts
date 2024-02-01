@@ -1,12 +1,10 @@
 import axios, { AxiosResponse } from 'axios';
 import { IProduct } from '../types/types';
 
-export const loadProducts = async (
+export const getProducts = async (
   productIndex: number,
-  setProductIndex: React.Dispatch<React.SetStateAction<number>>,
-  setProducts: React.Dispatch<React.SetStateAction<IProduct[]>>,
   searchText?: string
-): Promise<number> => {
+): Promise<IProduct[] | null> => {
   const productsToLoad = 12;
 
   return axios<IProduct[]>(
@@ -16,16 +14,11 @@ export const loadProducts = async (
     .then((response: AxiosResponse<IProduct[]>) => {
       const newProducts = response.data as IProduct[];
 
-      if (newProducts.length > 0) {
-        setProducts((prevProducts) => [...prevProducts, ...response.data]);
-        setProductIndex(newProducts[newProducts.length - 1].id + 1);
-      }
-
-      return newProducts.length;
+      return newProducts;
     })
     .catch((error) => {
       if (axios.isAxiosError(error) && error.response?.status === 400)
-        return -1;
+        return null;
 
       throw error;
     });

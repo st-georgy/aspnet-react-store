@@ -1,17 +1,19 @@
 import { Card, Col } from 'react-bootstrap';
 import { animated, useTrail } from 'react-spring';
-import { IProduct } from '../types/types';
+import { IProduct } from '../../types/types';
+import '../style/product.css';
 import ProductImages from './ProductImages';
-import './style/product.css';
 
 export default function Product({
   product,
   index,
+  rowIndex,
 }: {
   product: IProduct;
   index: number;
+  rowIndex: number;
 }) {
-  const trail = useTrail(index + 1, {
+  const trail = useTrail(rowIndex * 4 + index + 1, {
     opacity: 1,
     y: 0,
     from: { opacity: 0, y: 20 },

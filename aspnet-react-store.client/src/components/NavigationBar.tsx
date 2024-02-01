@@ -1,10 +1,15 @@
 import { useState } from 'react';
 import { Button, Container, Nav, Navbar } from 'react-bootstrap';
 import { CiSearch, CiShoppingCart } from 'react-icons/ci';
+import { useLocation } from 'react-router-dom';
 import logoSvg from '../assets/logo.svg';
-import SearchOffcanvas from './SearchOffcanvas';
+import SearchOffcanvas from './ProductsPage/SearchOffcanvas';
 
 export default function NavigationBar() {
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+  const searchText = searchParams.get('searchText');
+
   const [showSearchInput, setShowSearchInput] = useState<boolean>(false);
 
   const handleSearchInputClose = () => setShowSearchInput(false);
@@ -26,14 +31,14 @@ export default function NavigationBar() {
           <SearchOffcanvas
             show={showSearchInput}
             handleClose={handleSearchInputClose}
-            searchText='text'
+            searchText={searchText ?? undefined}
           />
 
           <Nav>
             <Nav.Link onClick={handleSearchInputShow}>
               <CiSearch size={30} />
             </Nav.Link>
-            <Nav.Link href='/cart'>
+            <Nav.Link>
               <CiShoppingCart size={30} />
             </Nav.Link>
 
