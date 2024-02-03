@@ -26,7 +26,7 @@ export default function Product({
         className='product-block d-flex justify-content-around'
       >
         <Card className='image-container'>
-          <ProductImages />
+          <ProductImages images={product.images} />
           <Card.Body>
             <Card.Title className='product-name'>{product?.name}</Card.Title>
             <Card.Text>

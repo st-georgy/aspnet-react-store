@@ -2,6 +2,7 @@
 using aspnet_react_store.Domain.Models;
 using aspnet_react_store.DataAccess.Entities;
 using Microsoft.EntityFrameworkCore;
+using aspnet_react_store.Core.Models;
 
 namespace aspnet_react_store.DataAccess.Repositories
 {
@@ -14,6 +15,7 @@ namespace aspnet_react_store.DataAccess.Repositories
         {
             var productEntities = await _context.Products
                 .AsNoTracking()
+                .Include(p => p.Images)
                 .ToListAsync();
 
             return EntitiesToProducts(productEntities);
@@ -57,7 +59,7 @@ namespace aspnet_react_store.DataAccess.Repositories
 
         public async Task<IEnumerable<Product>> Get(int? startId, int? count, string? searchText)
         {
-            var query = _context.Products.AsQueryable();
+            var query = _context.Products.Include(p => p.Images).AsQueryable();
 
             if (!string.IsNullOrWhiteSpace(searchText))
             {
@@ -90,10 +92,15 @@ namespace aspnet_react_store.DataAccess.Repositories
             return EntitiesToProducts(result);
         }
 
-        private static List<Product> EntitiesToProducts(List<ProductEntity> productEntities)
+        public static List<Product> EntitiesToProducts(List<ProductEntity> productEntities)
         {
             var products = productEntities
-                .Select(p => Product.Create(p.Id, p.Name, p.Price, p.Description))
+                .Select(p => Product.Create(
+                    p.Id,
+                    p.Name,
+                    p.Price,
+                    p.Description,
+                    ImagesRepository.EntitiesToImages(p.Images)))
                 .ToList();
 
             var validProducts = products

@@ -3,12 +3,18 @@ export interface IProduct {
   name: string;
   price: number;
   description?: string | null;
+  images: IImage[];
 }
 
 export interface ICart {
   id: number;
   user: IUser;
   products: IProduct[];
+}
+
+export interface IImage {
+  id: number;
+  filePath: string;
 }
 
 export interface IOrder {

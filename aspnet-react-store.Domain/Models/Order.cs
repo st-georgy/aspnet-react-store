@@ -17,12 +17,12 @@ namespace aspnet_react_store.Domain.Models
             User = user;
         }
 
-        public static Result<Order> Create(int Id, User? user, OrderStatus orderStatus = OrderStatus.Pending)
+        public static Result<Order> Create(int id, User? user, OrderStatus orderStatus = OrderStatus.Pending)
         {
             if (user is null)
                 return Result.Failure<Order>("Invalid User: User can not be null");
 
-            var order = new Order(Id, orderStatus, user);
+            var order = new Order(id, orderStatus, user);
 
             return Result.Success(order);
         }

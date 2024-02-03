@@ -1,14 +1,13 @@
 .product-block {
   position: relative;
   overflow: hidden;
-  cursor: pointer;
 }
 
 .product-name {
   transition: text-decoration 0.3s ease-in-out;
 }
 
-.product-block:hover .product-name {
+.image-container:hover .product-name {
   text-decoration: underline;
 }
 
@@ -17,6 +16,7 @@
   display: inline-block;
   overflow: hidden;
   width: 230px;
+  cursor: pointer;
 }
 
 .card {
@@ -25,6 +25,7 @@
 
 .image-container img {
   width: 230px;
+  height: 230px;
   display: block;
   transition: transform 0.3s ease-out;
 }
@@ -40,6 +41,6 @@
   pointer-events: none;
 }
 
-.product-block:hover img {
+.image-container:hover img {
   transform: scale(1.05);
 }

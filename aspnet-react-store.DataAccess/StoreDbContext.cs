@@ -8,6 +8,7 @@ namespace aspnet_react_store.DataAccess
     public class StoreDbContext(DbContextOptions<StoreDbContext> options) : DbContext(options)
     {
         public DbSet<CartEntity> Carts { get; set; } = null!;
+        public DbSet<ImageEntity> Images { get; set; } = null!;
         public DbSet<OrderEntity> Orders { get; set; } = null!;
         public DbSet<ProductEntity> Products { get; set; } = null!;
         public DbSet<UserEntity> Users { get; set; } = null!;
@@ -16,6 +17,7 @@ namespace aspnet_react_store.DataAccess
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<CartEntity>().ToTable("Cart");
+            modelBuilder.Entity<ImageEntity>().ToTable("Image");
             modelBuilder.Entity<OrderEntity>().ToTable("Order");
             modelBuilder.Entity<ProductEntity>().ToTable("Product");
             modelBuilder.Entity<UserEntity>().ToTable("User");
@@ -82,30 +84,19 @@ namespace aspnet_react_store.DataAccess
             };
             modelBuilder.Entity<CartEntity>().HasData(carts);
 
-            // var products = new[] {
-            //     new Product { Id = 1, Name = "T-Shirt", Price = 2300},
-            //     new Product { Id = 2, Name = "Jeans", Price = 4900},
-            //     new Product { Id = 3, Name = "Pants", Price = 5100},
-            //     new Product { Id = 4, Name = "Socks", Price = 1300},
-            // };
-
-            var products = new List<ProductEntity>();
-            var random = new Random();
-            var product_first_names = new string[] {
-                "Cotton", "Wool", "Silk", "Linen", "Bamboo", "Leather"
+            var products = new[] {
+                new ProductEntity { Id = 1, Name = "T-Shirt", Price = 2300},
+                new ProductEntity { Id = 2, Name = "Jeans", Price = 4900},
             };
-            var product_second_names = new string[] {
-                "Pants", "Trousers", "Socks", "Jeans", "T-Shirt", "Hoodie"
-            };
-
-            for (var i = 1; i < 100; i++)
-            {
-                var productName = product_first_names[random.Next(0, product_first_names.Length)] + " " +
-                                    product_second_names[random.Next(0, product_second_names.Length)];
-                var product = new ProductEntity { Id = i, Name = productName, Price = random.Next(1000, 10000) };
-                products.Add(product);
-            }
             modelBuilder.Entity<ProductEntity>().HasData(products);
+
+            var images = new[] {
+                new ImageEntity { Id = 1, FilePath = "Images/products/1/1.png", ProductId = 1 },
+                new ImageEntity { Id = 2, FilePath = "Images/products/1/2.png", ProductId = 1 },
+                new ImageEntity { Id = 3, FilePath = "Images/products/1/3.png", ProductId = 1 },
+                new ImageEntity { Id = 4, FilePath = "Images/products/1/4.png", ProductId = 1 },
+            };
+            modelBuilder.Entity<ImageEntity>().HasData(images);
         }
     }
 }

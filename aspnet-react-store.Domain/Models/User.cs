@@ -28,7 +28,7 @@ namespace aspnet_react_store.Domain.Models
             AccountType = accountType;
         }
 
-        public static Result<User> Create(int Id,
+        public static Result<User> Create(int id,
             string userName,
             string passwordHash,
             Cart? cart,
@@ -41,7 +41,7 @@ namespace aspnet_react_store.Domain.Models
             if (string.IsNullOrWhiteSpace(passwordHash))
                 return Result.Failure<User>("PasswordHash can not be null or empty");
 
-            var order = new User(Id, userName, passwordHash, cart, userInfo, accountType);
+            var order = new User(id, userName, passwordHash, cart, userInfo, accountType);
 
             return Result.Success(order);
         }
