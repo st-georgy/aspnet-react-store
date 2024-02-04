@@ -6,7 +6,7 @@ import { AppBar, Button, IconButton, Toolbar } from '@mui/material';
 import { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import logoSvg from '../assets/logo.svg';
-import SearchDrawer from './ProductsPage/SearchDrawer';
+import SearchDrawer from './MainProductsPage/SearchDrawer';
 
 export default function NavigationBar() {
   const location = useLocation();

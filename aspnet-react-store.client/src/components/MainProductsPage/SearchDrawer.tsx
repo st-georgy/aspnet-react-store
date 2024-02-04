@@ -1,5 +1,7 @@
-import { Drawer } from '@mui/material';
+import { Close as CloseIcon } from '@mui/icons-material';
+import { Drawer, IconButton } from '@mui/material';
 import { useEffect, useState } from 'react';
+import '../style/drawer.css';
 import SearchForm from './SearchForm';
 
 interface SearchDrawerProps {
@@ -44,11 +46,21 @@ export default function SearchDrawer({
       onClose={handleClose}
       onKeyDown={handleKeyDown}
     >
-      <SearchForm
-        value={searchInputValue}
-        onChange={handleInputChange}
-        onClick={handleSearch}
-      />
+      <div className='drawer'>
+        <div className='drawer-header'>
+          <h3>Поиск товаров</h3>
+          <IconButton onClick={handleClose}>
+            <CloseIcon color='inherit' />
+          </IconButton>
+        </div>
+        <div className='drawer-form'>
+          <SearchForm
+            value={searchInputValue}
+            onChange={handleInputChange}
+            onClick={handleSearch}
+          />
+        </div>
+      </div>
     </Drawer>
   );
 }

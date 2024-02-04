@@ -1,5 +1,6 @@
 import { useLocation } from 'react-router-dom';
-import ProductsList from '../ProductsPage/ProductsList';
+import ProductsList from '../MainProductsPage/ProductsList';
+import NavigationBar from '../NavigationBar';
 
 export default function ProductsPage() {
   const location = useLocation();
@@ -8,6 +9,7 @@ export default function ProductsPage() {
 
   return (
     <>
+      <NavigationBar />
       {searchText && searchText.trim() !== '' ? (
         <ProductsList searchText={searchText} />
       ) : (

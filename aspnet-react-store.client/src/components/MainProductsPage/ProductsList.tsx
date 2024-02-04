@@ -40,7 +40,7 @@ export default function ProductsList({ searchText }: ProductsListProps) {
       setIsLoading(false);
 
       if (result && result.length > 0) {
-        setIsLoadButtonVisible(true);
+        if (result.length >= 12) setIsLoadButtonVisible(true);
         updateProducts(result);
       } else {
         setProductsNotFound(true);
@@ -86,7 +86,7 @@ export default function ProductsList({ searchText }: ProductsListProps) {
           productsInRows.map((rowProducts, rowIndex) => (
             <Grid container spacing={2} key={rowIndex}>
               {rowProducts.map((product, index) => (
-                <Grid item xs={12} sm={6} md={3} key={product.id}>
+                <Grid item xs={4} sm={4} md={3} key={product.id}>
                   <Product
                     product={product}
                     index={index}

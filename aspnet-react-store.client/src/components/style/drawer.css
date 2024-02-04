@@ -1,0 +1,15 @@
+.drawer {
+  text-align: left;
+  padding: 0.5rem 2rem;
+}
+
+.drawer .drawer-form {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+.drawer .drawer-header {
+  display: flex;
+  justify-content: space-between;
+}

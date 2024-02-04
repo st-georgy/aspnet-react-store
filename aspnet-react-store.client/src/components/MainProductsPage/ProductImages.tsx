@@ -3,6 +3,7 @@ import { Navigation, Pagination } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/swiper-bundle.css';
 import { IImage } from '../../types/types';
+import '../style/swiper.css';
 
 interface ProductImagesProps {
   images: IImage[];

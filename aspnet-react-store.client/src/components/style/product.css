@@ -4,15 +4,7 @@
   display: flex;
   justify-content: space-around;
   width: 300px;
-  height: 300px;
-}
-
-.product-name {
-  transition: text-decoration 0.3s ease-in-out;
-}
-
-.image-container:hover .product-name {
-  text-decoration: underline;
+  height: 310px;
 }
 
 .image-container {
@@ -21,10 +13,7 @@
   overflow: hidden;
   width: 230px;
   cursor: pointer;
-}
-
-.card {
-  border: none !important;
+  border-radius: 0.5rem 0.5rem 0 0;
 }
 
 .image-container img {
@@ -32,6 +21,7 @@
   height: 230px;
   display: block;
   transition: transform 0.3s ease-out;
+  background-color: #f5f5f5;
 }
 
 .image-container::before {
@@ -47,4 +37,18 @@
 
 .image-container:hover img {
   transform: scale(1.05);
+}
+
+.product-content {
+  padding: 0 !important;
+}
+
+.product-name {
+  color: rgba(0, 0, 0, 0.5);
+  transition: text-decoration 0.3s ease-in-out;
+}
+
+.product-name:hover {
+  text-decoration: underline;
+  cursor: pointer;
 }

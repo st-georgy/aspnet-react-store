@@ -1,0 +1,8 @@
+.swiper-button-next,
+.swiper-button-prev {
+  color: transparent;
+}
+
+.swiper-pagination-bullet {
+  background-color: rgba(0, 0, 0, 0.3);
+}

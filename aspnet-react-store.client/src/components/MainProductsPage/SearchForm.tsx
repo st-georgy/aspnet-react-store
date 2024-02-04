@@ -18,7 +18,7 @@ export default function SearchForm({
   onClick,
 }: SearchFormProps) {
   return (
-    <div style={{ width: '70%', margin: '2rem' }}>
+    <div style={{ width: '70%' }}>
       <FormControl fullWidth>
         <InputLabel htmlFor='search-input'>Название товара</InputLabel>
         <Input
