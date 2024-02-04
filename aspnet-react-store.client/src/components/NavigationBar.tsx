@@ -48,6 +48,7 @@ export default function NavigationBar() {
             <Button
               variant='outlined'
               style={{ width: '169px', marginLeft: '20px' }}
+              href='/login'
             >
               Войти
             </Button>

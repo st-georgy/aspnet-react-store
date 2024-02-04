@@ -25,3 +25,13 @@
   scrollbar-color: #888 #f1f1f1;
   scrollbar-width: thin;
 }
+
+a,
+a:hover,
+a:visited {
+  text-decoration: none !important;
+}
+
+a:visited {
+  color: #1873d5;
+}
