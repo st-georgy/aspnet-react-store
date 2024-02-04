@@ -1,4 +1,4 @@
-import { Card, Col } from 'react-bootstrap';
+import { Card, CardContent, Grid, Typography } from '@mui/material';
 import { animated, useTrail } from 'react-spring';
 import { IProduct } from '../../types/types';
 import '../style/product.css';
@@ -20,21 +20,23 @@ export default function Product({
   });
 
   return (
-    <Col key={index} className='mb-4'>
+    <Grid item key={index} xs={12} sm={6} md={3}>
       <animated.div
         style={trail[index]}
         className='product-block d-flex justify-content-around'
       >
         <Card className='image-container'>
           <ProductImages images={product.images} />
-          <Card.Body>
-            <Card.Title className='product-name'>{product?.name}</Card.Title>
-            <Card.Text>
+          <CardContent>
+            <Typography variant='h6' className='product-name'>
+              {product?.name}
+            </Typography>
+            <Typography variant='body2'>
               <em>{'₽' + product?.price + ' руб.'}</em>
-            </Card.Text>
-          </Card.Body>
+            </Typography>
+          </CardContent>
         </Card>
       </animated.div>
-    </Col>
+    </Grid>
   );
 }

@@ -1,61 +1,59 @@
+import {
+  Search as SearchIcon,
+  ShoppingCart as ShoppingCartIcon,
+} from '@mui/icons-material';
+import { AppBar, Button, IconButton, Toolbar } from '@mui/material';
 import { useState } from 'react';
-import { Button, Container, Nav, Navbar } from 'react-bootstrap';
-import { CiSearch, CiShoppingCart } from 'react-icons/ci';
 import { useLocation } from 'react-router-dom';
 import logoSvg from '../assets/logo.svg';
-import SearchOffcanvas from './ProductsPage/SearchOffcanvas';
+import SearchDrawer from './ProductsPage/SearchDrawer';
 
 export default function NavigationBar() {
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const searchText = searchParams.get('searchText');
 
-  const [showSearchInput, setShowSearchInput] = useState<boolean>(false);
+  const [showSearchDrawer, setShowSearchDrawer] = useState<boolean>(false);
 
-  const handleSearchInputClose = () => setShowSearchInput(false);
-  const handleSearchInputShow = () => setShowSearchInput(true);
+  const handleSearchDrawerClose = () => setShowSearchDrawer(false);
+  const handleSearchDrawerShow = () => setShowSearchDrawer(true);
 
   return (
     <>
-      <Navbar bg='white'>
-        <Container>
-          <Navbar.Brand href='/'>
-            <img
-              src={logoSvg}
-              height='80'
-              className='d-inline-block align-top'
-              alt='Logo'
-            />
-          </Navbar.Brand>
+      <AppBar position='static' color='inherit' elevation={0}>
+        <SearchDrawer
+          show={showSearchDrawer}
+          handleClose={handleSearchDrawerClose}
+          searchText={searchText ?? ''}
+        />
 
-          <SearchOffcanvas
-            show={showSearchInput}
-            handleClose={handleSearchInputClose}
-            searchText={searchText ?? undefined}
-          />
+        <Toolbar>
+          <img src={logoSvg} height='80' alt='Logo' />
 
-          <Nav>
-            <Nav.Link onClick={handleSearchInputShow}>
-              <CiSearch size={30} />
-            </Nav.Link>
-            <Nav.Link>
-              <CiShoppingCart size={30} />
-            </Nav.Link>
+          <div
+            style={{
+              marginLeft: 'auto',
+              display: 'flex',
+              alignItems: 'center',
+            }}
+          >
+            <IconButton color='inherit' onClick={handleSearchDrawerShow}>
+              <SearchIcon fontSize='medium' />
+            </IconButton>
+
+            <IconButton color='inherit'>
+              <ShoppingCartIcon fontSize='medium' />
+            </IconButton>
 
             <Button
-              variant='outline-dark'
+              variant='outlined'
               style={{ width: '169px', marginLeft: '20px' }}
             >
               Войти
             </Button>
-
-            {/* <NavDropdown title={"Личный кабинет"} id="basic-nav-dropdown">
-                        <NavDropdown.Item href="/account">Мой профиль</NavDropdown.Item>
-                        <NavDropdown.Item href="/logout">Выйти</NavDropdown.Item>
-                    </NavDropdown> */}
-          </Nav>
-        </Container>
-      </Navbar>
+          </div>
+        </Toolbar>
+      </AppBar>
     </>
   );
 }

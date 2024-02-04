@@ -1,4 +1,7 @@
-import { Card, Carousel } from 'react-bootstrap';
+import { Card } from '@mui/material';
+import { Navigation, Pagination } from 'swiper/modules';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import 'swiper/swiper-bundle.css';
 import { IImage } from '../../types/types';
 
 interface ProductImagesProps {
@@ -7,22 +10,49 @@ interface ProductImagesProps {
 
 export default function ProductImages({ images }: ProductImagesProps) {
   return (
-    <Carousel interval={null} data-bs-theme='dark'>
+    <Swiper
+      navigation
+      pagination={{ clickable: true }}
+      loop={true}
+      spaceBetween={30}
+      slidesPerView={1}
+      modules={[Navigation, Pagination]}
+    >
       {(!images || images.length === 0) && (
-        <Carousel.Item>
-          <Card.Img
-            variant='top'
-            src='src/assets/products/placeholder_light.png'
-          />
-        </Carousel.Item>
+        <>
+          <SwiperSlide>
+            <Card elevation={3}>
+              <img
+                src='src/assets/products/placeholder_light.png'
+                alt='Placeholder'
+                style={{ width: '100%' }}
+              />
+            </Card>
+          </SwiperSlide>
+          <SwiperSlide>
+            <Card elevation={3}>
+              <img
+                src='src/assets/products/placeholder_light.png'
+                alt='Placeholder'
+                style={{ width: '100%' }}
+              />
+            </Card>
+          </SwiperSlide>
+        </>
       )}
       {images &&
         images.length > 0 &&
         images.map((image) => (
-          <Carousel.Item key={image.id}>
-            <Card.Img variant='top' src={image.filePath} />
-          </Carousel.Item>
+          <SwiperSlide key={image.id}>
+            <Card elevation={3}>
+              <img
+                src={image.filePath}
+                alt={`Product Image ${image.id}`}
+                style={{ width: '100%' }}
+              />
+            </Card>
+          </SwiperSlide>
         ))}
-    </Carousel>
+    </Swiper>
   );
 }

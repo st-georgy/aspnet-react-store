@@ -1,6 +1,10 @@
 .product-block {
   position: relative;
   overflow: hidden;
+  display: flex;
+  justify-content: space-around;
+  width: 300px;
+  height: 300px;
 }
 
 .product-name {

@@ -11,7 +11,7 @@ export default function App() {
         <Route path='/' element={<ProductsPage />} />
         <Route path='/products' element={<ProductsPage />} />
       </Routes>
-      <hr className='mt-5' />
+      <hr style={{ marginTop: '3rem' }} />
       <Footer />
     </>
   );
