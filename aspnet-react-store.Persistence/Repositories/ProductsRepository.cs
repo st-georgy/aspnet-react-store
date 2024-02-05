@@ -2,6 +2,7 @@
 using aspnet_react_store.Domain.Models;
 using aspnet_react_store.Domain.Abstractions.Repositories;
 using aspnet_react_store.Persistence.Entities;
+using aspnet_react_store.Persistence.Mapping;
 
 namespace aspnet_react_store.Persistence.Repositories
 {
@@ -17,7 +18,7 @@ namespace aspnet_react_store.Persistence.Repositories
                 .Include(p => p.Images)
                 .ToListAsync();
 
-            return EntitiesToProducts(productEntities);
+            return productEntities.Select(Mapper.Map);
         }
 
         public async Task<int> Create(Product product)
@@ -71,7 +72,7 @@ namespace aspnet_react_store.Persistence.Repositories
             }
 
             if (!startId.HasValue || !count.HasValue)
-                return EntitiesToProducts(await query.ToListAsync());
+                return (await query.ToListAsync()).Select(Mapper.Map);
 
             if (startId < 1 || count < 1)
                 throw new ArgumentException("Invalid arguments (startId or count)");
@@ -79,7 +80,7 @@ namespace aspnet_react_store.Persistence.Repositories
             var maxProductId = await _context.Products.MaxAsync(p => (int?)p.Id) ?? 0;
 
             if (startId > maxProductId)
-                throw new ArgumentOutOfRangeException("startId exceeds the maximum Id in the database");
+                throw new ArgumentOutOfRangeException(nameof(startId), " exceeds the maximum Id in the database");
 
             query = query
                 .OrderBy(p => p.Id)
@@ -88,34 +89,7 @@ namespace aspnet_react_store.Persistence.Repositories
 
             var result = await query.ToListAsync();
 
-            return EntitiesToProducts(result);
-        }
-
-        public static List<Product> EntitiesToProducts(List<ProductEntity> productEntities)
-        {
-            var products = productEntities
-                .Select(p => Product.Create(
-                    p.Id,
-                    p.Name,
-                    p.Price,
-                    p.Description,
-                    ImagesRepository.EntitiesToImages(p.Images)))
-                .ToList();
-
-            var validProducts = products
-                .Where(result => result.IsSuccess)
-                .Select(result => result.Value)
-                .ToList();
-
-            var errors = products
-                .Where(result => result.IsFailure)
-                .Select(result => result.Error)
-                .ToList();
-
-            if (errors.Count != 0)
-                Console.WriteLine($"Failed to create some products: {string.Join(", ", errors)}");
-
-            return validProducts;
+            return result.Select(Mapper.Map);
         }
     }
 }

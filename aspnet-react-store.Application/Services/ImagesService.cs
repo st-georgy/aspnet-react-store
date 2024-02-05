@@ -14,8 +14,8 @@ namespace aspnet_react_store.Application.Services
         public async Task<int> CreateImage(Image image) =>
             await _imagesRepository.Create(image);
 
-        public async Task<int> UpdateImage(int id, string filePath, int productId) =>
-            await _imagesRepository.Update(id, filePath, productId);
+        public async Task<int> UpdateImage(int id, string filePath) =>
+            await _imagesRepository.Update(id, filePath);
 
         public async Task<int> DeleteImage(int id) =>
             await _imagesRepository.Delete(id);

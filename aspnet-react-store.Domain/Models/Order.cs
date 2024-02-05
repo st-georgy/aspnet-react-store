@@ -7,10 +7,10 @@ namespace aspnet_react_store.Domain.Models
     {
         public int Id { get; }
         public OrderStatus OrderStatus { get; }
-        public User? User { get; }
+        public User User { get; }
         public List<Product> Products { get; } = [];
 
-        private Order(int id, OrderStatus orderStatus, User? user)
+        private Order(int id, OrderStatus orderStatus, User user)
         {
             Id = id;
             OrderStatus = orderStatus;

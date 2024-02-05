@@ -7,6 +7,6 @@ namespace aspnet_react_store.Domain.Abstractions.Services
         Task<int> CreateImage(Image image);
         Task<int> DeleteImage(int id);
         Task<IEnumerable<Image>> GetProductImages(int productId);
-        Task<int> UpdateImage(int id, string filePath, int productId);
+        Task<int> UpdateImage(int id, string filePath);
     }
 }
