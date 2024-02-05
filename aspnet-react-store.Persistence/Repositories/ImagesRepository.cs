@@ -1,12 +1,10 @@
-using aspnet_react_store.Core.Abstractions;
-using aspnet_react_store.Core.Models;
-using aspnet_react_store.DataAccess.Entities;
-using aspnet_react_store.DataAccess.Entities.Enums;
-using aspnet_react_store.Domain.Models;
 using CSharpFunctionalExtensions;
 using Microsoft.EntityFrameworkCore;
+using aspnet_react_store.Domain.Abstractions.Repositories;
+using aspnet_react_store.Domain.Models;
+using aspnet_react_store.Persistence.Entities;
 
-namespace aspnet_react_store.DataAccess.Repositories
+namespace aspnet_react_store.Persistence.Repositories
 {
     public class ImagesRepository(StoreDbContext context) : IImagesRepository
     {

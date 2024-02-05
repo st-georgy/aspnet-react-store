@@ -1,4 +1,4 @@
-namespace aspnet_react_store.Core.Abstractions
+namespace aspnet_react_store.Domain.Abstractions.Services
 {
     public interface IImageUrlProvider
     {

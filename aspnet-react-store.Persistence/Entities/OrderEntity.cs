@@ -1,6 +1,6 @@
-using aspnet_react_store.DataAccess.Entities.Enums;
+using aspnet_react_store.Persistence.Entities.Enums;
 
-namespace aspnet_react_store.DataAccess.Entities
+namespace aspnet_react_store.Persistence.Entities
 {
     public class OrderEntity
     {

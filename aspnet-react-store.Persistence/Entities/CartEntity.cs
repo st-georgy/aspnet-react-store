@@ -1,4 +1,4 @@
-namespace aspnet_react_store.DataAccess.Entities
+namespace aspnet_react_store.Persistence.Entities
 {
     public class CartEntity
     {

@@ -1,5 +1,4 @@
-﻿using aspnet_react_store.Core.Models;
-using CSharpFunctionalExtensions;
+﻿using CSharpFunctionalExtensions;
 
 namespace aspnet_react_store.Domain.Models
 {

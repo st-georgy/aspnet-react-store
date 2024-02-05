@@ -22,6 +22,6 @@
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="8.0.0" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\aspnet-react-store.DataAccess\aspnet-react-store.DataAccess.csproj" />
+    <ProjectReference Include="..\aspnet-react-store.Persistence\aspnet-react-store.Persistence.csproj" />
   </ItemGroup>
 </Project>

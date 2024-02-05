@@ -1,5 +1,6 @@
-﻿using aspnet_react_store.Domain.Abstractions;
-using aspnet_react_store.Domain.Models;
+﻿using aspnet_react_store.Domain.Models;
+using aspnet_react_store.Domain.Abstractions.Repositories;
+using aspnet_react_store.Domain.Abstractions.Services;
 
 namespace aspnet_react_store.Application.Services
 {

@@ -1,5 +1,5 @@
-﻿using aspnet_react_store.Domain.Models.Enums;
 using CSharpFunctionalExtensions;
+using aspnet_react_store.Domain.Models.Enums;
 
 namespace aspnet_react_store.Domain.Models
 {

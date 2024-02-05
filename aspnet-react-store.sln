@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "aspnet-react-store.API", "a
 EndProject
 Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "aspnet-react-store.client", "aspnet-react-store.client\aspnet-react-store.client.esproj", "{4A03A467-ACEB-4DA6-AFFF-5282DBFA8240}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "aspnet-react-store.DataAccess", "aspnet-react-store.DataAccess\aspnet-react-store.DataAccess.csproj", "{7D5B1C5C-656B-4A11-A042-56411580E95D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "aspnet-react-store.Persistence", "aspnet-react-store.Persistence\aspnet-react-store.Persistence.csproj", "{7D5B1C5C-656B-4A11-A042-56411580E95D}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "aspnet-react-store.Domain", "aspnet-react-store.Domain\aspnet-react-store.Domain.csproj", "{C96445DE-65D4-4792-81CA-48A53F86D328}"
 EndProject

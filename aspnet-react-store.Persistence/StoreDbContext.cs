@@ -1,9 +1,9 @@
 using Microsoft.EntityFrameworkCore;
-using aspnet_react_store.DataAccess.Entities;
-using aspnet_react_store.DataAccess.Configurations;
-using aspnet_react_store.DataAccess.Entities.Enums;
+using aspnet_react_store.Persistence.Entities;
+using aspnet_react_store.Persistence.Configurations;
+using aspnet_react_store.Persistence.Entities.Enums;
 
-namespace aspnet_react_store.DataAccess
+namespace aspnet_react_store.Persistence
 {
     public class StoreDbContext(DbContextOptions<StoreDbContext> options) : DbContext(options)
     {
@@ -16,17 +16,11 @@ namespace aspnet_react_store.DataAccess
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<CartEntity>().ToTable("Cart");
-            modelBuilder.Entity<ImageEntity>().ToTable("Image");
-            modelBuilder.Entity<OrderEntity>().ToTable("Order");
-            modelBuilder.Entity<ProductEntity>().ToTable("Product");
-            modelBuilder.Entity<UserEntity>().ToTable("User");
-            modelBuilder.Entity<UserInfoEntity>().ToTable("UserInfo");
-
             modelBuilder.HasPostgresEnum<AccountTypeEnum>();
             modelBuilder.HasPostgresEnum<OrderStatusEnum>();
 
             modelBuilder.ApplyConfiguration(new CartConfiguration());
+            modelBuilder.ApplyConfiguration(new ImageConfiguration());
             modelBuilder.ApplyConfiguration(new OrderConfiguration());
             modelBuilder.ApplyConfiguration(new ProductConfiguration());
             modelBuilder.ApplyConfiguration(new UserConfiguration());

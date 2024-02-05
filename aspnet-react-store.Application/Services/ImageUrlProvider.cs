@@ -1,4 +1,4 @@
-using aspnet_react_store.Core.Abstractions;
+using aspnet_react_store.Domain.Abstractions.Services;
 
 namespace aspnet_react_store.Application.Services
 {

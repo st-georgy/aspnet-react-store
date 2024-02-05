@@ -1,10 +1,9 @@
-﻿using aspnet_react_store.Domain.Abstractions;
+﻿using Microsoft.EntityFrameworkCore;
 using aspnet_react_store.Domain.Models;
-using aspnet_react_store.DataAccess.Entities;
-using Microsoft.EntityFrameworkCore;
-using aspnet_react_store.Core.Models;
+using aspnet_react_store.Domain.Abstractions.Repositories;
+using aspnet_react_store.Persistence.Entities;
 
-namespace aspnet_react_store.DataAccess.Repositories
+namespace aspnet_react_store.Persistence.Repositories
 {
     public class ProductsRepository(StoreDbContext context) : IProductsRepository
     {

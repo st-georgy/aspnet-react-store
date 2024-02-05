@@ -1,6 +1,5 @@
 namespace aspnet_react_store.Server
 {
-
     public class Program
     {
         public static void Main(string[] args) => CreateHostBuilder(args).Build().Run();

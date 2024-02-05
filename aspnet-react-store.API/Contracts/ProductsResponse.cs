@@ -1,6 +1,4 @@
-﻿using aspnet_react_store.Core.Models;
-
-namespace aspnet_react_store.API.Contracts
+﻿namespace aspnet_react_store.API.Contracts
 {
     public record ProductsResponse(
         int Id,

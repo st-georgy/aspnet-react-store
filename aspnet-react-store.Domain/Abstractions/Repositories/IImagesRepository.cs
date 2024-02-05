@@ -1,6 +1,6 @@
-using aspnet_react_store.Core.Models;
+using aspnet_react_store.Domain.Models;
 
-namespace aspnet_react_store.Core.Abstractions
+namespace aspnet_react_store.Domain.Abstractions.Repositories
 {
     public interface IImagesRepository
     {

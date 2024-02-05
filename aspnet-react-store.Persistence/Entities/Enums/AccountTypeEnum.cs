@@ -1,4 +1,4 @@
-namespace aspnet_react_store.DataAccess.Entities.Enums
+namespace aspnet_react_store.Persistence.Entities.Enums
 {
     public enum AccountTypeEnum
     {
