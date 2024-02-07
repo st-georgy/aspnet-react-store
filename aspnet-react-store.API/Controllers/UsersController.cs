@@ -1,6 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authentication;
 using aspnet_react_store.API.Contracts.Users;
 using aspnet_react_store.Domain.Abstractions.Services;
+
 
 namespace aspnet_react_store.API.Controllers
 {
@@ -40,6 +43,20 @@ namespace aspnet_react_store.API.Controllers
             {
                 return BadRequest("Failed to login");
             }
+        }
+
+        [Authorize]
+        [HttpPost("validate")]
+        public ActionResult ValidateToken() => Ok();
+
+        [Authorize]
+        [HttpPost("logout")]
+        public ActionResult Logout()
+        {
+            if (Request.Cookies.ContainsKey("tasty-cookies"))
+                Response.Cookies.Delete("tasty-cookies");
+
+            return Ok();
         }
     }
 }

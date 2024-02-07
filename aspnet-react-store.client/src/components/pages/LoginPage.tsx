@@ -1,6 +1,7 @@
 import { Container } from '@mui/material';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import logoSvg from '../../assets/logo.svg';
+import { validateToken } from '../../utils/authApiUtils';
 import LoginForm from '../LoginPage/LoginForm';
 import Tabs from '../LoginPage/LoginPageTabs';
 import RegisterForm from '../LoginPage/RegisterForm';
@@ -11,6 +12,12 @@ export default function LoginPage() {
   const handleChange = (_: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
+
+  useEffect(() => {
+    validateToken().then((isTokenValid) => {
+      if (isTokenValid) window.location.href = '/?loginSuccess=true';
+    });
+  });
 
   return (
     <>
