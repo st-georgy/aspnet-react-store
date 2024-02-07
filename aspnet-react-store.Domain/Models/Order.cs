@@ -6,11 +6,11 @@ namespace aspnet_react_store.Domain.Models
     public class Order
     {
         public int Id { get; }
-        public OrderStatus OrderStatus { get; }
         public User User { get; }
+        public OrderStatus OrderStatus { get; }
         public List<Product> Products { get; } = [];
 
-        private Order(int id, OrderStatus orderStatus, User user)
+        private Order(int id, User user, OrderStatus orderStatus)
         {
             Id = id;
             OrderStatus = orderStatus;
@@ -22,7 +22,7 @@ namespace aspnet_react_store.Domain.Models
             if (user is null)
                 return Result.Failure<Order>("Invalid User: User can not be null");
 
-            var order = new Order(id, orderStatus, user);
+            var order = new Order(id, user, orderStatus);
 
             return Result.Success(order);
         }

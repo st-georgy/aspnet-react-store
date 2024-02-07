@@ -9,7 +9,7 @@ namespace aspnet_react_store.Persistence.Entities
         public string Email { get; set; } = null!;
         public string PasswordHash { get; set; } = null!;
 
-        public AccountTypeEnum AccountType { get; set; }
+        public UserRoleEnum UserRole { get; set; }
 
         public CartEntity? Cart { get; set; }
         public UserInfoEntity? UserInfo { get; set; }

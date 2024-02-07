@@ -10,18 +10,19 @@
     <SpaProxyServerUrl>https://localhost:5173</SpaProxyServerUrl>
   </PropertyGroup>
   <ItemGroup>
-    <ProjectReference Include="..\aspnet-react-store.Application\aspnet-react-store.Application.csproj" />
     <ProjectReference Include="..\aspnet-react-store.client\aspnet-react-store.client.esproj">
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="13.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.SpaProxy">
       <Version>8.*-*</Version>
     </PackageReference>
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="8.0.0" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\aspnet-react-store.Infrastructure\aspnet-react-store.Infrastructure.csproj" />
     <ProjectReference Include="..\aspnet-react-store.Persistence\aspnet-react-store.Persistence.csproj" />
   </ItemGroup>
 </Project>

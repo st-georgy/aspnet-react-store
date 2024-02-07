@@ -9,7 +9,7 @@ namespace aspnet_react_store.Domain.Models
         public string UserName { get; } = null!;
         public string Email { get; } = null!;
         public string PasswordHash { get; } = null!;
-        public AccountType AccountType { get; }
+        public UserRole UserRole { get; }
         public Cart? Cart { get; }
         public UserInfo? UserInfo { get; }
 
@@ -19,7 +19,7 @@ namespace aspnet_react_store.Domain.Models
             string passwordHash,
             Cart? cart,
             UserInfo? userInfo,
-            AccountType accountType)
+            UserRole userRole)
         {
             Id = id;
             UserName = userName;
@@ -27,7 +27,7 @@ namespace aspnet_react_store.Domain.Models
             PasswordHash = passwordHash;
             Cart = cart;
             UserInfo = userInfo;
-            AccountType = accountType;
+            UserRole = userRole;
         }
 
         public static Result<User> Create(int id,
@@ -36,7 +36,7 @@ namespace aspnet_react_store.Domain.Models
             string passwordHash,
             Cart? cart,
             UserInfo? userInfo,
-            AccountType accountType = AccountType.User)
+            UserRole userRole = UserRole.User)
         {
             if (string.IsNullOrWhiteSpace(userName))
                 return Result.Failure<User>("UserName can not be null or empty");
@@ -47,7 +47,7 @@ namespace aspnet_react_store.Domain.Models
             if (string.IsNullOrWhiteSpace(email))
                 return Result.Failure<User>("Email can not be null or empty");
 
-            var order = new User(id, userName, email, passwordHash, cart, userInfo, accountType);
+            var order = new User(id, userName, email, passwordHash, cart, userInfo, userRole);
 
             return Result.Success(order);
         }

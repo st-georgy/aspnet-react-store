@@ -1,12 +1,7 @@
-﻿using Npgsql;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.FileProviders;
-using aspnet_react_store.Application.Services;
-using aspnet_react_store.Domain.Abstractions.Repositories;
-using aspnet_react_store.Domain.Abstractions.Services;
+﻿using Microsoft.Extensions.FileProviders;
 using aspnet_react_store.Persistence;
-using aspnet_react_store.Persistence.Entities.Enums;
-using aspnet_react_store.Persistence.Repositories;
+using aspnet_react_store.Infrastructure;
+using aspnet_react_store.API.Extensions;
 
 namespace aspnet_react_store.Server
 {
@@ -21,37 +16,28 @@ namespace aspnet_react_store.Server
 
             services.AddHttpContextAccessor();
 
-            var dataSourceBuilder = new NpgsqlDataSourceBuilder(Configuration.GetConnectionString(nameof(StoreDbContext)));
-            dataSourceBuilder.MapEnum<AccountTypeEnum>();
-            dataSourceBuilder.MapEnum<OrderStatusEnum>();
-            var dataSource = dataSourceBuilder.Build();
+            services.Configure<JwtOptions>(Configuration.GetSection(nameof(JwtOptions)));
 
-            services.AddDbContext<StoreDbContext>(options => options.UseNpgsql(dataSource));
-
-            services.AddScoped<IProductsService, ProductsService>();
-            services.AddScoped<IImagesService, ImagesService>();
-
-            services.AddScoped<IProductsRepository, ProductsRepository>();
-            services.AddScoped<IImagesRepository, ImagesRepository>();
-
-            services.AddSingleton<IImageUrlProvider>(provider =>
-            {
-                var accessor = provider.GetRequiredService<IHttpContextAccessor>();
-                var request = accessor.HttpContext!.Request;
-                var baseUrl = Configuration["ASPNETCORE_URLS"]?.Split(';').Select(url => new Uri(url)).FirstOrDefault()?.ToString();
-
-                if (string.IsNullOrWhiteSpace(baseUrl))
-                    throw new Exception("Configuration file is incorrect (Check launchsettings.json)");
-
-                return new ImageUrlProvider(baseUrl);
-            });
+            services.AddApiProviders(Configuration);
+            services.AddApiDbContext(Configuration);
+            services.AddApiAuthentication(Configuration);
+            services.AddApiEntityServices();
         }
 
         public void Configure(IApplicationBuilder app, StoreDbContext dbContext, IWebHostEnvironment env)
         {
             app.UseHttpsRedirection();
 
+            app.UseCookiePolicy(new CookiePolicyOptions
+            {
+                MinimumSameSitePolicy = SameSiteMode.Strict,
+                HttpOnly = Microsoft.AspNetCore.CookiePolicy.HttpOnlyPolicy.Always,
+                Secure = CookieSecurePolicy.Always,
+            });
+
             app.UseRouting();
+
+            app.UseAuthentication();
 
             app.UseAuthorization();
 

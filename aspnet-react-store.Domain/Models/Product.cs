@@ -8,7 +8,7 @@ namespace aspnet_react_store.Domain.Models
         public string Name { get; } = null!;
         public decimal Price { get; }
         public string? Description { get; }
-        public List<Image>? Images { get; }
+        public List<Image> Images { get; }
 
         private Product(int id, string name, decimal price, string? description, List<Image> images)
         {

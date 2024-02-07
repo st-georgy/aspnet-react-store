@@ -11,7 +11,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "aspnet-react-store.Persiste
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "aspnet-react-store.Domain", "aspnet-react-store.Domain\aspnet-react-store.Domain.csproj", "{C96445DE-65D4-4792-81CA-48A53F86D328}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "aspnet-react-store.Application", "aspnet-react-store.Application\aspnet-react-store.Application.csproj", "{EA0FEEEC-9459-405E-80B7-91A44A1396DB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "aspnet-react-store.Application", "aspnet-react-store.Application\aspnet-react-store.Application.csproj", "{EA0FEEEC-9459-405E-80B7-91A44A1396DB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "aspnet-react-store.Infrastructure", "aspnet-react-store.Infrastructure\aspnet-react-store.Infrastructure.csproj", "{222A39D8-A162-4B09-BDCE-BEA2271E970C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -41,6 +43,10 @@ Global
 		{EA0FEEEC-9459-405E-80B7-91A44A1396DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EA0FEEEC-9459-405E-80B7-91A44A1396DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EA0FEEEC-9459-405E-80B7-91A44A1396DB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{222A39D8-A162-4B09-BDCE-BEA2271E970C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{222A39D8-A162-4B09-BDCE-BEA2271E970C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{222A39D8-A162-4B09-BDCE-BEA2271E970C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{222A39D8-A162-4B09-BDCE-BEA2271E970C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

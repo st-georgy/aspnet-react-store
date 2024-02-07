@@ -30,8 +30,8 @@ namespace aspnet_react_store.Persistence.Configurations
             builder.Property(u => u.PasswordHash)
                 .IsRequired();
 
-            builder.Property(u => u.AccountType)
-                .HasDefaultValue(AccountTypeEnum.User);
+            builder.Property(u => u.UserRole)
+                .HasDefaultValue(UserRoleEnum.User);
         }
     }
 }

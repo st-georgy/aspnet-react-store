@@ -16,7 +16,7 @@ namespace aspnet_react_store.Persistence
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.HasPostgresEnum<AccountTypeEnum>();
+            modelBuilder.HasPostgresEnum<UserRoleEnum>();
             modelBuilder.HasPostgresEnum<OrderStatusEnum>();
 
             modelBuilder.ApplyConfiguration(new CartConfiguration());
@@ -43,6 +43,12 @@ namespace aspnet_react_store.Persistence
             return base.SaveChangesAsync(cancellationToken);
         }
 
+        public async Task<int> GetNextSequenceValue(string sequenceName)
+        {
+            var sql = $"SELECT last_value FROM \"{sequenceName}\";";
+            return await Database.ExecuteSqlRawAsync(sql) + 1;
+        }
+
         private void ProcessAddedUserEntities()
         {
             foreach (var entry in ChangeTracker.Entries<UserEntity>())
@@ -58,8 +64,8 @@ namespace aspnet_react_store.Persistence
         private static void LoadInitialData(ModelBuilder modelBuilder)
         {
             var users = new[] {
-                new UserEntity { Id = 1, UserName = "admin", Email = "admin@localhost", AccountType = AccountTypeEnum.Admin, PasswordHash = "63a9f0ea7bb98050796b649e85481845" },
-                new UserEntity { Id = 2, UserName = "support", Email = "support@localhost", AccountType = AccountTypeEnum.Support, PasswordHash = "434990c8a25d2be94863561ae98bd682" },
+                new UserEntity { Id = 1, UserName = "admin", Email = "admin@localhost", UserRole = UserRoleEnum.Admin, PasswordHash = "63a9f0ea7bb98050796b649e85481845" },
+                new UserEntity { Id = 2, UserName = "support", Email = "support@localhost", UserRole = UserRoleEnum.Support, PasswordHash = "434990c8a25d2be94863561ae98bd682" },
                 new UserEntity { Id = 3, UserName = "user", Email = "test@localhost", PasswordHash = "ee11cbb19052e40b07aac0ca060c23ee" },
             };
             modelBuilder.Entity<UserEntity>().HasData(users);

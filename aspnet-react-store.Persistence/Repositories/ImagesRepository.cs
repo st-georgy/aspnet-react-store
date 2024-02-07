@@ -1,14 +1,17 @@
+using AutoMapper;
 using CSharpFunctionalExtensions;
 using Microsoft.EntityFrameworkCore;
 using aspnet_react_store.Domain.Abstractions.Repositories;
 using aspnet_react_store.Domain.Models;
-using aspnet_react_store.Persistence.Mapping;
+using aspnet_react_store.Persistence.Entities;
 
 namespace aspnet_react_store.Persistence.Repositories
 {
-    public class ImagesRepository(StoreDbContext context) : IImagesRepository
+    public class ImagesRepository(StoreDbContext context, IMapper mapper) : IImagesRepository
     {
         private readonly StoreDbContext _context = context;
+        private readonly IMapper _mapper = mapper;
+        
 
         public async Task<IEnumerable<Image>> Get(int productId)
         {
@@ -18,12 +21,12 @@ namespace aspnet_react_store.Persistence.Repositories
                 .AsNoTracking()
                 .ToListAsync();
 
-            return imageEntities.Select(Mapper.Map);
+            return imageEntities.Select(i => _mapper.Map<Image>(i)!);
         }
 
         public async Task<int> Create(Image image)
         {
-            var imageEntity = Mapper.Map(image);
+            var imageEntity = _mapper.Map<ImageEntity>(image)!;
 
             await _context.Images.AddAsync(imageEntity);
             await _context.SaveChangesAsync();

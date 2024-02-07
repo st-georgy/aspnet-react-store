@@ -1,15 +1,16 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using aspnet_react_store.Domain.Models;
 using aspnet_react_store.Domain.Abstractions.Repositories;
 using aspnet_react_store.Persistence.Entities;
-using aspnet_react_store.Persistence.Mapping;
 
 namespace aspnet_react_store.Persistence.Repositories
 {
-    public class ProductsRepository(StoreDbContext context) : IProductsRepository
+    public class ProductsRepository(StoreDbContext context, IMapper mapper) : IProductsRepository
     {
 
         private readonly StoreDbContext _context = context;
+        private readonly IMapper _mapper = mapper;
 
         public async Task<IEnumerable<Product>> Get()
         {
@@ -18,17 +19,12 @@ namespace aspnet_react_store.Persistence.Repositories
                 .Include(p => p.Images)
                 .ToListAsync();
 
-            return productEntities.Select(Mapper.Map);
+            return productEntities.Select(p => _mapper.Map<Product>(p)!);
         }
 
         public async Task<int> Create(Product product)
         {
-            var productEntity = new ProductEntity
-            {
-                Name = product.Name,
-                Price = product.Price,
-                Description = product.Description,
-            };
+            var productEntity = _mapper.Map<ProductEntity>(product)!;
 
             await _context.Products.AddAsync(productEntity);
             await _context.SaveChangesAsync();
@@ -65,14 +61,16 @@ namespace aspnet_react_store.Persistence.Repositories
             {
                 var searchTerms = searchText.ToLower().Split(' ', StringSplitOptions.RemoveEmptyEntries);
 
+#pragma warning disable CA1862 // Use the 'StringComparison' method overloads to perform case-insensitive string comparisons
                 query = query.Where(p =>
                     p.Name.ToLower().Equals(searchText)
                         || searchTerms.Any(term =>
                             p.Name.ToLower().Contains(term)));
+#pragma warning restore CA1862 // Use the 'StringComparison' method overloads to perform case-insensitive string comparisons
             }
 
             if (!startId.HasValue || !count.HasValue)
-                return (await query.ToListAsync()).Select(Mapper.Map);
+                return (await query.ToListAsync()).Select(p => _mapper.Map<Product>(p)!);
 
             if (startId < 1 || count < 1)
                 throw new ArgumentException("Invalid arguments (startId or count)");
@@ -89,7 +87,7 @@ namespace aspnet_react_store.Persistence.Repositories
 
             var result = await query.ToListAsync();
 
-            return result.Select(Mapper.Map);
+            return result.Select(p => _mapper.Map<Product>(p)!);
         }
     }
 }
