@@ -66,12 +66,6 @@ export default function ProductsList({ searchText }: ProductsListProps) {
     });
   };
 
-  const productsInRows = [];
-  for (let i = 0; i < products.length; i += 4) {
-    const rowProducts = products.slice(i, i + 4);
-    productsInRows.push(rowProducts);
-  }
-
   return (
     <>
       <Container style={{ marginTop: '6rem' }}>
@@ -82,22 +76,17 @@ export default function ProductsList({ searchText }: ProductsListProps) {
           />
         )}
 
-        {!productsNotFound &&
-          productsInRows.map((rowProducts, rowIndex) => (
-            <Grid container spacing={2} key={rowIndex}>
-              {rowProducts.map((product, index) => (
-                <Grid item xs={4} sm={4} md={3} key={product.id}>
-                  <Product
-                    product={product}
-                    index={index}
-                    rowIndex={rowIndex}
-                  />
-                </Grid>
-              ))}
-            </Grid>
-          ))}
+        {!productsNotFound && (
+          <Grid container spacing={10}>
+            {products.map((product, index) => (
+              <Grid item xs={12} sm={6} md={4} lg={3} key={product.id}>
+                <Product product={product} index={index} />
+              </Grid>
+            ))}
+          </Grid>
+        )}
 
-        {productsInRows.length === 0 && !productsNotFound && !isLoading && (
+        {products.length === 0 && !productsNotFound && !isLoading && (
           <Typography variant='h6'>Загрузка товаров...</Typography>
         )}
 

@@ -1,8 +1,10 @@
 :root {
   margin: 50px 100px;
-  font-size: 16px;
+  font-size: 1rem;
+  font-weight: 400;
   line-height: 1.5;
   font-synthesis: none;
+  font-family: 'Roboto, sans-serif';
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -34,4 +36,15 @@ a:visited {
 
 a:visited {
   color: #1873d5;
+}
+
+.menu-username {
+  color: #888;
+  font-size: 0.9rem;
+}
+
+.userinfo {
+  margin-left: 5px;
+  display: flex;
+  flex-direction: column;
 }

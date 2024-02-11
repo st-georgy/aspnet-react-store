@@ -1,14 +1,19 @@
 import {
   AccountCircle,
+  AdminPanelSettings,
+  Logout,
   Search as SearchIcon,
   ShoppingCart as ShoppingCartIcon,
 } from '@mui/icons-material';
 import {
   AppBar,
+  Avatar,
   Button,
+  Divider,
   IconButton,
   Menu,
   MenuItem,
+  Paper,
   Toolbar,
 } from '@mui/material';
 import { useState } from 'react';
@@ -18,10 +23,14 @@ import { logout } from '../utils/authApiUtils';
 import SearchDrawer from './MainProductsPage/SearchDrawer';
 
 interface NavigationBarProps {
-  loggedIn: boolean;
+  isLoggedIn: boolean;
+  isAdmin: boolean;
 }
 
-export default function NavigationBar({ loggedIn }: NavigationBarProps) {
+export default function NavigationBar({
+  isLoggedIn,
+  isAdmin,
+}: NavigationBarProps) {
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const searchText = searchParams.get('searchText');
@@ -66,14 +75,14 @@ export default function NavigationBar({ loggedIn }: NavigationBarProps) {
             }}
           >
             <IconButton color='inherit' onClick={handleSearchDrawerShow}>
-              <SearchIcon fontSize='medium' />
+              <SearchIcon fontSize='large' />
             </IconButton>
 
             <IconButton color='inherit'>
-              <ShoppingCartIcon fontSize='medium' />
+              <ShoppingCartIcon fontSize='large' />
             </IconButton>
 
-            {!loggedIn && (
+            {!isLoggedIn && (
               <Button
                 variant='outlined'
                 style={{ width: '169px', marginLeft: '20px' }}
@@ -82,17 +91,16 @@ export default function NavigationBar({ loggedIn }: NavigationBarProps) {
                 Войти
               </Button>
             )}
-            {loggedIn && (
+            {isLoggedIn && (
               <div>
                 <IconButton
-                  size='large'
                   aria-label='account of current user'
                   aria-controls='menu-appbar'
                   aria-haspopup='true'
                   onClick={handleMenu}
                   color='inherit'
                 >
-                  <AccountCircle />
+                  <AccountCircle fontSize='large' />
                 </IconButton>
                 <Menu
                   sx={{ mt: '45px' }}
@@ -110,8 +118,38 @@ export default function NavigationBar({ loggedIn }: NavigationBarProps) {
                   open={Boolean(anchorEl)}
                   onClose={handleClose}
                 >
-                  <MenuItem onClick={handleClose}>Профиль</MenuItem>
-                  <MenuItem onClick={handleLogout}>Выйти</MenuItem>
+                  <Paper
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      padding: '10px',
+                    }}
+                    elevation={0}
+                  >
+                    <Avatar />
+                    <div className='userinfo'>
+                      <span>&nbsp;&nbsp;Full Name</span>
+                      <span className='menu-username'>
+                        &nbsp;&nbsp;@username
+                      </span>
+                    </div>
+                  </Paper>
+                  <Divider sx={{ marginTop: '8px', marginBottom: '8px' }} />
+                  <MenuItem onClick={handleClose}>
+                    <AccountCircle />
+                    &nbsp;&nbsp;Профиль
+                  </MenuItem>
+                  {isAdmin && (
+                    <MenuItem onClick={handleClose}>
+                      <AdminPanelSettings />
+                      &nbsp;&nbsp;Панель управления
+                    </MenuItem>
+                  )}
+                  <Divider sx={{ marginTop: '8px', marginBottom: '8px' }} />
+                  <MenuItem onClick={handleLogout}>
+                    <Logout />
+                    &nbsp;&nbsp;Выйти
+                  </MenuItem>
                 </Menu>
               </div>
             )}

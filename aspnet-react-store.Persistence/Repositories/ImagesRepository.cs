@@ -11,7 +11,7 @@ namespace aspnet_react_store.Persistence.Repositories
     {
         private readonly StoreDbContext _context = context;
         private readonly IMapper _mapper = mapper;
-        
+
 
         public async Task<IEnumerable<Image>> Get(int productId)
         {

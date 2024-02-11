@@ -1,17 +1,18 @@
 ﻿using Npgsql;
+using System.Security.Claims;
 using System.Text;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using aspnet_react_store.Infrastructure;
-using aspnet_react_store.Persistence;
-using aspnet_react_store.Persistence.Repositories;
-using aspnet_react_store.Persistence.Mapping;
-using aspnet_react_store.Persistence.Entities.Enums;
 using aspnet_react_store.Application.Services;
+using aspnet_react_store.Domain.Abstractions.Auth;
 using aspnet_react_store.Domain.Abstractions.Repositories;
 using aspnet_react_store.Domain.Abstractions.Services;
-using aspnet_react_store.Domain.Abstractions.Auth;
+using aspnet_react_store.Infrastructure;
+using aspnet_react_store.Persistence;
+using aspnet_react_store.Persistence.Entities.Enums;
+using aspnet_react_store.Persistence.Mapping;
+using aspnet_react_store.Persistence.Repositories;
 
 namespace aspnet_react_store.API.Extensions
 {
@@ -84,6 +85,13 @@ namespace aspnet_react_store.API.Extensions
                         OnMessageReceived = context =>
                         {
                             context.Token = context.Request.Cookies["tasty-cookies"];
+                            return Task.CompletedTask;
+                        },
+                        OnTokenValidated = context =>
+                        {
+                            var roleClaim = context.Principal?.FindFirst(ClaimTypes.Role);
+                            if (roleClaim != null && context.Principal?.Identity is ClaimsIdentity identity)
+                                identity.AddClaim(new Claim("role", roleClaim.Value));
                             return Task.CompletedTask;
                         }
                     };

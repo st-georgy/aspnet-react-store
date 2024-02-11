@@ -1,15 +1,13 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Authentication;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using aspnet_react_store.API.Contracts.Users;
 using aspnet_react_store.Domain.Abstractions.Services;
-
 
 namespace aspnet_react_store.API.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class UsersController(IUsersService usersService) : Controller
+    public class AuthController(IUsersService usersService) : Controller
     {
         private readonly IUsersService _usersService = usersService;
 
@@ -57,6 +55,15 @@ namespace aspnet_react_store.API.Controllers
                 Response.Cookies.Delete("tasty-cookies");
 
             return Ok();
+        }
+
+        [Authorize]
+        [HttpGet("role")]
+        public ActionResult GetRole()
+        {
+            var userRole = User.FindFirst("role")?.Value;
+
+            return Ok(new { role = userRole });
         }
     }
 }

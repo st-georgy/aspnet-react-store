@@ -16,7 +16,7 @@ namespace aspnet_react_store.Infrastructure
         {
             Claim[] claims = [
                 new("userId", user.Id.ToString()),
-                new("userRole", user.UserRole.ToString())
+                new("role", user.UserRole.ToString())
                 ];
 
             var signingCredentials = new SigningCredentials(

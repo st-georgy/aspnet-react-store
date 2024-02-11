@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
-using aspnet_react_store.Domain.Models;
 using aspnet_react_store.Domain.Abstractions.Repositories;
+using aspnet_react_store.Domain.Models;
 using aspnet_react_store.Persistence.Entities;
 
 namespace aspnet_react_store.Persistence.Repositories

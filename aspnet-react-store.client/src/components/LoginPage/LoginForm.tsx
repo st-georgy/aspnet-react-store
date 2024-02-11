@@ -22,11 +22,6 @@ interface FormData {
   password: string;
 }
 
-interface FormErrors {
-  email: string;
-  password: string;
-}
-
 export default function LoginForm({ setActiveTab }: LoginFormProps) {
   const [loginAlert, setLoginAlert] = useState<boolean>(false);
 
@@ -35,7 +30,7 @@ export default function LoginForm({ setActiveTab }: LoginFormProps) {
     password: '',
   });
 
-  const [formErrors, setFormErrors] = useState<FormErrors>({
+  const [formErrors, setFormErrors] = useState<FormData>({
     email: '',
     password: '',
   });
@@ -71,7 +66,7 @@ export default function LoginForm({ setActiveTab }: LoginFormProps) {
   };
 
   const validateForm = () => {
-    const errors: FormErrors = {
+    const errors: FormData = {
       email: '',
       password: '',
     };

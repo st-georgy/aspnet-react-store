@@ -29,7 +29,7 @@ export interface IUser {
   username: string;
   cart: ICart;
   info: IUserInfo;
-  accountType: AccountType;
+  userRole: UserRole;
   orders: IOrder[];
 }
 
@@ -52,7 +52,7 @@ export enum OrderStatus {
   Completed,
 }
 
-export enum AccountType {
+export enum UserRole {
   User,
   Support,
   Admin,

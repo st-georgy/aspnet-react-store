@@ -8,7 +8,8 @@ namespace aspnet_react_store.Persistence.Mapping
 {
     public class AutoMapperProfile : Profile
     {
-        public AutoMapperProfile() {
+        public AutoMapperProfile()
+        {
             CreateMap<Cart, CartEntity>().ReverseMap();
             CreateMap<Image, ImageEntity>().ReverseMap();
             CreateMap<Order, OrderEntity>().ReverseMap();
