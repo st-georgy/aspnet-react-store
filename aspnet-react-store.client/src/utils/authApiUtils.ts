@@ -11,68 +11,66 @@ interface RegisterData {
   password: string;
 }
 
+const handleResponse = <T>(response: AxiosResponse<T>): T => {
+  if (response.status === 200) return response.data;
+  throw new Error('Request failed');
+};
+
+const handleError = (error: any): boolean => {
+  if (axios.isAxiosError(error) && error.response?.status === 401) return false;
+  throw error;
+};
+
+const handleErrorStr = (error: any): string | null => {
+  if (axios.isAxiosError(error) && error.response?.status === 401) return null;
+  throw error;
+};
+
 export const login = async (loginData: LoginData): Promise<boolean> => {
-  return axios
-    .post('/api/auth/login', loginData)
-    .then((response: AxiosResponse<boolean>) => {
-      if (response.status === 200) return true;
-      else return false;
-    })
-    .catch((error) => {
-      if (axios.isAxiosError(error)) return false;
-      else throw error;
-    });
+  try {
+    await axios.post('/api/auth/login', loginData);
+    return true;
+  } catch (error) {
+    return handleError(error);
+  }
 };
 
 export const register = async (
   registerData: RegisterData
 ): Promise<boolean> => {
-  return axios
-    .post('/api/auth/register', registerData)
-    .then((response: AxiosResponse<boolean>) => {
-      if (response.status === 200) return true;
-      else return false;
-    })
-    .catch((error) => {
-      if (axios.isAxiosError(error)) return false;
-      else throw error;
-    });
+  try {
+    await axios.post('/api/auth/register', registerData);
+    return true;
+  } catch (error) {
+    return handleError(error);
+  }
 };
 
 export const validateToken = async (): Promise<boolean> => {
-  return axios
-    .post('/api/auth/validate')
-    .then((response: AxiosResponse<boolean>) => {
-      if (response.status === 200) return true;
-      else return false;
-    })
-    .catch(() => {
-      return false;
-    });
+  try {
+    await axios.post('/api/auth/validate');
+    return true;
+  } catch (error) {
+    return false;
+  }
 };
 
 export const logout = async (): Promise<boolean> => {
-  return axios
-    .post('/api/auth/logout')
-    .then((response: AxiosResponse<boolean>) => {
-      if (response.status === 200) return true;
-      else return false;
-    })
-    .catch((error) => {
-      if (axios.isAxiosError(error) && error.status === 401) return true;
-      else throw error;
-    });
+  try {
+    await axios.post('/api/auth/logout');
+    return true;
+  } catch (error) {
+    return false;
+  }
 };
 
 export const getRole = async (): Promise<string | null> => {
-  return axios
-    .get('/api/auth/role')
-    .then((response: AxiosResponse<{ role: string }>) => {
-      if (response.status === 200) return response.data?.role.toUpperCase();
-      else return null;
-    })
-    .catch((error) => {
-      if (axios.isAxiosError(error) && error.status === 401) return null;
-      else throw error;
-    });
+  try {
+    const response = await axios.get('/api/auth/role');
+    return (
+      handleResponse<{ role: string }>(response)?.role.toUpperCase() || null
+    );
+  } catch (error) {
+    return handleErrorStr(error);
+  }
 };

@@ -57,3 +57,8 @@ export enum UserRole {
   Support,
   Admin,
 }
+
+export enum FormType {
+  Login,
+  Register,
+}

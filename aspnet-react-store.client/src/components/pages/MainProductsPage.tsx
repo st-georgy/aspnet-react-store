@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { getRole, validateToken } from '../../utils/authApiUtils';
-import ShowAlert from '../LoginPage/ShowAlert';
-import ProductsList from '../MainProductsPage/ProductsList';
-import NavigationBar from '../NavigationBar';
+import NavBar from '../navigation/NavBar';
+import ShowAlert from '../shared/ShowAlert';
+import ProductsList from './MainProductsPage/ProductsList';
 
 export default function ProductsPage() {
   const location = useLocation();
@@ -16,23 +16,25 @@ export default function ProductsPage() {
   const [isAdmin, setIsAdmin] = useState<boolean>(false);
 
   useEffect(() => {
-    if (loginSuccess === 'true') setShowLoginAlert(true);
-
-    validateToken().then((isTokenValid) => {
+    const fetchData = async () => {
+      const isTokenValid = await validateToken();
       setIsLoggedIn(isTokenValid);
 
-      if (isTokenValid) getRole().then((role) => setIsAdmin(role === 'ADMIN'));
-    });
+      if (isTokenValid) {
+        const role = await getRole();
+        setIsAdmin(role === 'ADMIN');
+      }
+    };
+
+    fetchData();
+
+    if (loginSuccess === 'true') setShowLoginAlert(true);
   }, []);
 
   return (
     <>
-      <NavigationBar isLoggedIn={isLoggedIn} isAdmin={isAdmin} />
-      {searchText && searchText.trim() !== '' ? (
-        <ProductsList searchText={searchText} />
-      ) : (
-        <ProductsList />
-      )}
+      <NavBar isLoggedIn={isLoggedIn} isAdmin={isAdmin} />
+      <ProductsList searchText={searchText ?? undefined} />
       {showLoginAlert && (
         <ShowAlert severity='success' message='Вы успешно авторизовались' />
       )}

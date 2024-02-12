@@ -1,7 +1,7 @@
 import { Close as CloseIcon } from '@mui/icons-material';
 import { Drawer, IconButton } from '@mui/material';
 import { useEffect, useState } from 'react';
-import '../style/drawer.css';
+import '../../style/drawer.css';
 import SearchForm from './SearchForm';
 
 interface SearchDrawerProps {

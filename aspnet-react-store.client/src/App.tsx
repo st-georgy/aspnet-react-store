@@ -1,7 +1,7 @@
 ﻿import { Route, Routes } from 'react-router-dom';
-import Footer from './components/Footer';
 import LoginPage from './components/pages/LoginPage';
 import MainProductsPage from './components/pages/MainProductsPage';
+import Footer from './components/shared/Footer';
 
 export default function App() {
   return (

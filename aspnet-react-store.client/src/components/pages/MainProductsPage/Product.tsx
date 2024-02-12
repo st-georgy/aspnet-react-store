@@ -1,7 +1,7 @@
 import { Card, CardContent, Typography } from '@mui/material';
 import { animated, useTrail } from 'react-spring';
-import { IProduct } from '../../types/types';
-import '../style/product.css';
+import { IProduct } from '../../../types/types';
+import '../../style/product.css';
 import ProductImages from './ProductImages';
 
 export default function Product({

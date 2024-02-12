@@ -2,30 +2,36 @@ import { Container } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import logoSvg from '../../assets/logo.svg';
-import { validateToken } from '../../utils/authApiUtils';
-import LoginForm from '../LoginPage/LoginForm';
-import Tabs from '../LoginPage/LoginPageTabs';
-import RegisterForm from '../LoginPage/RegisterForm';
-import ShowAlert from '../LoginPage/ShowAlert';
+import { FormType } from '../../types/types';
+import { login, register, validateToken } from '../../utils/authApiUtils';
+import ShowAlert from '../shared/ShowAlert';
+import AuthForm from './LoginPage/AuthForm';
+import Tabs from './LoginPage/LoginPageTabs';
 
 export default function LoginPage() {
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const registerSuccess = queryParams.get('registerSuccess');
 
-  const [value, setValue] = useState<number>(0);
+  const [activeTab, setActiveTab] = useState<number>(0);
   const [showRegisterAlert, setShowRegisterAlert] = useState<boolean>(false);
 
   const handleChange = (_: React.SyntheticEvent, newValue: number) => {
-    setValue(newValue);
+    setActiveTab(newValue);
   };
 
   useEffect(() => {
-    validateToken().then((isTokenValid) => {
+    const handleTokenValidation = async () => {
+      const isTokenValid = await validateToken();
       if (isTokenValid) window.location.href = '/?loginSuccess=true';
-    });
+    };
 
-    if (registerSuccess === 'true') setShowRegisterAlert(true);
+    const handleRegisterSuccess = () => {
+      if (registerSuccess === 'true') setShowRegisterAlert(true);
+    };
+
+    handleTokenValidation();
+    handleRegisterSuccess();
   }, []);
 
   return (
@@ -40,10 +46,22 @@ export default function LoginPage() {
           </a>
         </div>
 
-        <Tabs value={value} onChange={handleChange} />
+        <Tabs value={activeTab} onChange={handleChange} />
 
-        {value === 0 && <LoginForm setActiveTab={setValue} />}
-        {value === 1 && <RegisterForm setActiveTab={setValue} />}
+        {activeTab === 0 && (
+          <AuthForm
+            setActiveTab={setActiveTab}
+            endpoint={login}
+            formType={FormType.Login}
+          />
+        )}
+        {activeTab === 1 && (
+          <AuthForm
+            setActiveTab={setActiveTab}
+            endpoint={register}
+            formType={FormType.Register}
+          />
+        )}
       </Container>
 
       {showRegisterAlert && (
