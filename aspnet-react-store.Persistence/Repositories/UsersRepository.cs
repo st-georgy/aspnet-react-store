@@ -71,6 +71,20 @@ namespace aspnet_react_store.Persistence.Repositories
             if (username?.Trim().Length == 0 || email?.Trim().Length == 0)
                 throw new Exception("Username and email can not be white space.");
 
+            var userEntityEmail = await _context.Users
+                .AsNoTracking()
+                .FirstOrDefaultAsync(u => u.Email == email && u.Id != id);
+
+            if (userEntityEmail is not null)
+                throw new Exception("Email is busy");
+
+            var userEntityUsername = await _context.Users
+                .AsNoTracking()
+                .FirstOrDefaultAsync(u => u.UserName == username && u.Id != id);
+
+            if (userEntityUsername is not null)
+                throw new Exception("Username is busy");
+
             await _context.Users
                 .Where(u => u.Id == id)
                 .ExecuteUpdateAsync(up => up

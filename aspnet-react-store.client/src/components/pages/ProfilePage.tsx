@@ -1,11 +1,11 @@
-import { Container, Grid, Typography } from '@mui/material';
+import { Container, Grid } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { IUser, IUserProfile } from '../../types/types';
 import { getProfile } from '../../utils/profileApiUtils';
 import NavBar from '../navigation/NavBar';
-import ProfileField from './ProfilePage/ProfileField';
 import TabPanel from './ProfilePage/ProfileTabPanel';
 import ProfileTabs from './ProfilePage/ProfileTabs';
+import ProfileTabAccount from './ProfilePage/Tabs/ProfileTabAccount';
 
 interface ProfilePageProps {
   currentUser: IUser | null;
@@ -23,10 +23,15 @@ export default function ProfilePage({
     setTabValue(newValue);
   };
 
+  const onProfileUpdate = async (updatedProfile: IUserProfile) => {
+    setProfileData(updatedProfile);
+  };
+
   useEffect(() => {
     const fetchData = async () => {
       if (!currentUser) window.location.href = '/login';
-      setProfileData(await getProfile());
+      const profile: IUserProfile = await getProfile();
+      setProfileData(profile);
     };
 
     fetchData();
@@ -41,24 +46,12 @@ export default function ProfilePage({
             <ProfileTabs tabValue={tabValue} onChange={handleChange} />
           </Grid>
           <Grid item xs={6} md={9} className='options-grid'>
-            <TabPanel value={tabValue} index={0} header='Профиль'>
-              <Typography variant='h5' mt={5} mb={2} fontWeight='500'>
-                Аккаунт
-              </Typography>
-              <ProfileField title='Почта' value={profileData?.email} />
-              <ProfileField
-                title='Имя пользователя'
-                value={profileData?.userName}
-              />
-              <ProfileField title='Пароль' value='********' />
-              <Typography variant='h5' mt={5} mb={2} fontWeight='500'>
-                Имя
-              </Typography>
-              <ProfileField title='Фамилия' value={profileData?.lastName} />
-              <ProfileField title='Имя' value={profileData?.firstName} />
-              <ProfileField title='Отчество' value={profileData?.middleName} />
-            </TabPanel>
-
+            <ProfileTabAccount
+              tabValue={tabValue}
+              index={0}
+              profileData={profileData!}
+              onProfileUpdate={onProfileUpdate}
+            />
             <TabPanel value={tabValue} index={1} header='Заказы'></TabPanel>
             <TabPanel value={tabValue} index={2} header='Платежи'></TabPanel>
             <TabPanel

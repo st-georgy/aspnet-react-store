@@ -28,7 +28,15 @@ export default function ProfileTabs({ tabValue, onChange }: ProfileTabsProps) {
     };
   }
   return (
-    <Tabs orientation='vertical' value={tabValue} onChange={onChange}>
+    <Tabs
+      orientation='vertical'
+      value={tabValue}
+      onChange={onChange}
+      TabIndicatorProps={{
+        style: { display: 'none' },
+      }}
+      textColor='inherit'
+    >
       <Tab label='Профиль' {...a11yProps(0)} sx={tabStyle(0)}></Tab>
       <Tab label='Заказы' {...a11yProps(2)} sx={tabStyle(1)}></Tab>
       <Tab label='Платежи' {...a11yProps(3)} sx={tabStyle(2)}></Tab>

@@ -62,11 +62,3 @@ a:visited {
 .options-grid h1 {
   margin-top: 0px !important;
 }
-
-& .MuiTabs-indicator {
-  display: none;
-}
-
-& .Mui-selected {
-  color: #000 !important;
-}

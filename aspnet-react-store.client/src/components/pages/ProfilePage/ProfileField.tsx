@@ -1,11 +1,40 @@
-import { Button, Typography } from '@mui/material';
+import { TextField, Typography } from '@mui/material';
+import React, { useEffect, useState } from 'react';
 
 interface ProfileFieldProps {
   title: string;
   value?: string | null | undefined;
+  editing: boolean;
+  id: string;
+  isRequired?: boolean;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-export default function ProfileField({ title, value }: ProfileFieldProps) {
+export default function ProfileField({
+  title,
+  value,
+  editing,
+  id,
+  isRequired,
+  onChange,
+}: ProfileFieldProps) {
+  const requiredMessage = 'Поле обязательно для заполнения';
+
+  const [error, setError] = useState<string>();
+
+  const handleBlur = (_: React.FocusEvent<HTMLInputElement>) => {
+    if (isRequired && !value?.trim()) setError(requiredMessage);
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    onChange(e);
+    setError('');
+  };
+
+  useEffect(() => {
+    if (isRequired && value?.trim()) setError('');
+  }, [value]);
+
   return (
     <div
       style={{
@@ -18,22 +47,34 @@ export default function ProfileField({ title, value }: ProfileFieldProps) {
         <Typography variant='h6' fontWeight='400'>
           {title}
         </Typography>
-        <Typography
-          variant='body1'
-          style={{ color: 'grey', marginBottom: '8px' }}
-        >
-          {value ?? 'Не указано'}
-        </Typography>
       </div>
       <div
         style={{
-          marginTop: '1rem',
           marginLeft: 'auto',
         }}
       >
-        <Button variant='outlined' color='primary'>
-          Редактировать
-        </Button>
+        {!editing && (
+          <Typography variant='body1' sx={{ color: 'grey', mb: '24px' }}>
+            {value ?? 'Не указано'}
+          </Typography>
+        )}
+        {editing && (
+          <TextField
+            name={id}
+            id={id}
+            variant='filled'
+            value={value ?? ''}
+            onChange={handleChange}
+            onBlur={handleBlur}
+            size='small'
+            hiddenLabel
+            helperText={error}
+            error={!!error}
+            required={isRequired}
+            placeholder={title ?? ''}
+            sx={{ width: '280px', height: '48px' }}
+          />
+        )}
       </div>
     </div>
   );
