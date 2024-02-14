@@ -3,15 +3,21 @@ import { AppBar, Button, IconButton, Toolbar } from '@mui/material';
 import { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import logoSvg from '../../assets/logo.svg';
+import { IUser } from '../../types/types';
 import SearchDrawer from '../pages/MainProductsPage/SearchDrawer';
 import UserMenu from './UserMenu';
 
 interface NavBarProps {
-  isLoggedIn: boolean;
+  currentUser: IUser | null;
   isAdmin: boolean;
+  showSearch: boolean;
 }
 
-export default function NavBar({ isLoggedIn, isAdmin }: NavBarProps) {
+export default function NavBar({
+  currentUser,
+  isAdmin,
+  showSearch,
+}: NavBarProps) {
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const searchText = searchParams.get('searchText');
@@ -31,7 +37,9 @@ export default function NavBar({ isLoggedIn, isAdmin }: NavBarProps) {
         />
 
         <Toolbar>
-          <img src={logoSvg} height='80' alt='Logo' />
+          <a href='/'>
+            <img src={logoSvg} height='80' alt='Logo' />
+          </a>
 
           <div
             style={{
@@ -40,16 +48,18 @@ export default function NavBar({ isLoggedIn, isAdmin }: NavBarProps) {
               alignItems: 'center',
             }}
           >
-            <IconButton color='inherit' onClick={handleSearchDrawerShow}>
-              <Search fontSize='large' />
-            </IconButton>
+            {showSearch && (
+              <IconButton color='inherit' onClick={handleSearchDrawerShow}>
+                <Search fontSize='large' />
+              </IconButton>
+            )}
 
             <IconButton color='inherit'>
               <ShoppingCart fontSize='large' />
             </IconButton>
 
-            {isLoggedIn ? (
-              <UserMenu isAdmin={isAdmin} />
+            {currentUser ? (
+              <UserMenu currentUser={currentUser} isAdmin={isAdmin} />
             ) : (
               <Button
                 variant='outlined'

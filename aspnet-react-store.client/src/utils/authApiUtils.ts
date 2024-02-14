@@ -1,4 +1,5 @@
 import axios, { AxiosResponse } from 'axios';
+import { IUser } from '../types/types';
 
 interface LoginData {
   email: string;
@@ -18,11 +19,6 @@ const handleResponse = <T>(response: AxiosResponse<T>): T => {
 
 const handleError = (error: any): boolean => {
   if (axios.isAxiosError(error) && error.response?.status === 401) return false;
-  throw error;
-};
-
-const handleErrorStr = (error: any): string | null => {
-  if (axios.isAxiosError(error) && error.response?.status === 401) return null;
   throw error;
 };
 
@@ -64,13 +60,13 @@ export const logout = async (): Promise<boolean> => {
   }
 };
 
-export const getRole = async (): Promise<string | null> => {
+export const getUser = async (): Promise<IUser | null> => {
   try {
-    const response = await axios.get('/api/auth/role');
-    return (
-      handleResponse<{ role: string }>(response)?.role.toUpperCase() || null
-    );
+    const response = await axios.get('/api/profile/me');
+    return handleResponse<IUser>(response);
   } catch (error) {
-    return handleErrorStr(error);
+    if (axios.isAxiosError(error) && error.response?.status === 401)
+      return null;
+    throw error;
   }
 };

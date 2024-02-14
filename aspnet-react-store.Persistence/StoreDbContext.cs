@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
-using aspnet_react_store.Persistence.Entities;
 using aspnet_react_store.Persistence.Configurations;
+using aspnet_react_store.Persistence.Entities;
 using aspnet_react_store.Persistence.Entities.Enums;
 
 namespace aspnet_react_store.Persistence

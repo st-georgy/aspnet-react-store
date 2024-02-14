@@ -6,36 +6,14 @@ export interface IProduct {
   images: IImage[];
 }
 
-export interface ICart {
-  id: number;
-  user: IUser;
-  products: IProduct[];
-}
-
-export interface IImage {
-  id: number;
-  filePath: string;
-}
-
-export interface IOrder {
-  id: number;
-  user: IUser;
-  status: OrderStatus;
-  products: IProduct[];
-}
-
 export interface IUser {
   id: number;
-  username: string;
-  cart: ICart;
-  info: IUserInfo;
-  userRole: UserRole;
-  orders: IOrder[];
+  userName: string;
+  shortName?: string | null;
+  userRole: string;
 }
 
-export interface IUserInfo {
-  id: number;
-  user: IUser;
+export interface IUserProfile extends IUser {
   email?: string | null;
   firstName?: string | null;
   middleName?: string | null;
@@ -43,13 +21,9 @@ export interface IUserInfo {
   joinDate: Date;
 }
 
-export enum OrderStatus {
-  Pending,
-  Cancelled,
-  Declined,
-  Confirmed,
-  Shipped,
-  Completed,
+export interface IImage {
+  id: number;
+  filePath: string;
 }
 
 export enum UserRole {

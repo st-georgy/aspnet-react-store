@@ -11,6 +11,16 @@ namespace aspnet_react_store.Persistence.Repositories
         private readonly StoreDbContext _context = context;
         private readonly IMapper _mapper = mapper;
 
+        public async Task<User> GetById(int id)
+        {
+            var userEntity = await _context.Users
+                .AsNoTracking()
+                .FirstOrDefaultAsync(u => u.Id == id)
+                    ?? throw new Exception("User not found");
+
+            return _mapper.Map<User>(userEntity)!;
+        }
+
         public async Task<User> GetByEmail(string email)
         {
             var userEntity = await _context.Users
@@ -51,6 +61,23 @@ namespace aspnet_react_store.Persistence.Repositories
 
             await _context.Users.AddAsync(userEntity);
             await _context.SaveChangesAsync();
+        }
+
+        public async Task<int> Update(int id, string? username, string? email)
+        {
+            if (username is null && email is null)
+                return 0;
+
+            if (username?.Trim().Length == 0 || email?.Trim().Length == 0)
+                throw new Exception("Username and email can not be white space.");
+
+            await _context.Users
+                .Where(u => u.Id == id)
+                .ExecuteUpdateAsync(up => up
+                    .SetProperty(u => u.UserName, u => username ?? u.UserName)
+                    .SetProperty(u => u.Email, u => email ?? u.Email));
+
+            return id;
         }
 
         public async Task<int> GetNextId() =>

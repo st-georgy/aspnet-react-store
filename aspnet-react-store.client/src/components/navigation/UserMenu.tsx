@@ -8,13 +8,15 @@ import {
   Paper,
 } from '@mui/material';
 import { useState } from 'react';
+import { IUser } from '../../types/types';
 import { logout } from '../../utils/authApiUtils';
 
 interface UserMenuProps {
+  currentUser: IUser | null;
   isAdmin: boolean;
 }
 
-export default function UserMenu({ isAdmin }: UserMenuProps) {
+export default function UserMenu({ currentUser, isAdmin }: UserMenuProps) {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
   const handleClose = () => {
@@ -32,7 +34,7 @@ export default function UserMenu({ isAdmin }: UserMenuProps) {
   };
 
   return (
-    <div>
+    <>
       <IconButton onClick={handleMenu} color='inherit'>
         <AccountCircle fontSize='large' />
       </IconButton>
@@ -63,12 +65,14 @@ export default function UserMenu({ isAdmin }: UserMenuProps) {
         >
           <Avatar />
           <div className='userinfo'>
-            <span>&nbsp;&nbsp;Full Name</span>
-            <span className='menu-username'>&nbsp;&nbsp;@username</span>
+            <span>&nbsp;&nbsp;{currentUser?.shortName}</span>
+            <span className='menu-username'>
+              &nbsp;&nbsp;@{currentUser?.userName}
+            </span>
           </div>
         </Paper>
         <Divider sx={{ marginTop: '8px', marginBottom: '8px' }} />
-        <MenuItem onClick={handleClose}>
+        <MenuItem component={'a'} href='/profile'>
           <AccountCircle />
           &nbsp;&nbsp;Профиль
         </MenuItem>
@@ -84,6 +88,6 @@ export default function UserMenu({ isAdmin }: UserMenuProps) {
           &nbsp;&nbsp;Выйти
         </MenuItem>
       </Menu>
-    </div>
+    </>
   );
 }

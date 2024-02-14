@@ -35,10 +35,12 @@ namespace aspnet_react_store.API.Extensions
             services.AddScoped<IProductsService, ProductsService>();
             services.AddScoped<IImagesService, ImagesService>();
             services.AddScoped<IUsersService, UsersService>();
+            services.AddScoped<IUserInfosService, UserInfosService>();
 
             services.AddScoped<IProductsRepository, ProductsRepository>();
             services.AddScoped<IImagesRepository, ImagesRepository>();
             services.AddScoped<IUsersRepository, UsersRepository>();
+            services.AddScoped<IUserInfosRepository, UserInfosRepository>();
 
             services.AddAutoMapper(typeof(AutoMapperProfile));
         }

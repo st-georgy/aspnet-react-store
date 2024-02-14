@@ -1,11 +1,11 @@
 import { Box, Tab, Tabs } from '@mui/material';
 
-interface LoginPageTabsProps {
+interface AuthPageTabsProps {
   value: number;
   onChange: (_: React.SyntheticEvent, newValue: number) => void;
 }
 
-export default function LoginPageTabs({ value, onChange }: LoginPageTabsProps) {
+export default function AuthPageTabs({ value, onChange }: AuthPageTabsProps) {
   return (
     <Box sx={{ mt: 1 }}>
       <Tabs value={value} onChange={onChange} centered>

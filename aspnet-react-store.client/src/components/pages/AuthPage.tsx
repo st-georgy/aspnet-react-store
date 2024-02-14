@@ -5,10 +5,10 @@ import logoSvg from '../../assets/logo.svg';
 import { FormType } from '../../types/types';
 import { login, register, validateToken } from '../../utils/authApiUtils';
 import ShowAlert from '../shared/ShowAlert';
-import AuthForm from './LoginPage/AuthForm';
-import Tabs from './LoginPage/LoginPageTabs';
+import AuthForm from './AuthPage/AuthForm';
+import Tabs from './AuthPage/AuthPageTabs';
 
-export default function LoginPage() {
+export default function AuthPage() {
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const registerSuccess = queryParams.get('registerSuccess');

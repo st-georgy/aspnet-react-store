@@ -17,7 +17,7 @@ namespace aspnet_react_store.Application.Services
         public async Task<int> CreateProduct(Product product) =>
             await _productsRepository.Create(product);
 
-        public async Task<int> UpdateProduct(int id, string name, decimal price, string description) =>
+        public async Task<int> UpdateProduct(int id, string? name, decimal? price, string? description) =>
             await _productsRepository.Update(id, name, price, description);
 
         public async Task<int> DeleteProduct(int id) =>

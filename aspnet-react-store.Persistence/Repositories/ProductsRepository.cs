@@ -32,14 +32,17 @@ namespace aspnet_react_store.Persistence.Repositories
             return productEntity.Id;
         }
 
-        public async Task<int> Update(int id, string name, decimal price, string description)
+        public async Task<int> Update(int id, string? name, decimal? price, string? description)
         {
+            if (name is null && price is null && description is null)
+                return 0;
+
             await _context.Products
                 .Where(p => p.Id == id)
                 .ExecuteUpdateAsync(u => u
-                    .SetProperty(p => p.Name, p => name)
-                    .SetProperty(p => p.Price, p => price)
-                    .SetProperty(p => p.Description, p => description));
+                    .SetProperty(p => p.Name, p => name ?? p.Name)
+                    .SetProperty(p => p.Price, p => price ?? p.Price)
+                    .SetProperty(p => p.Description, p => description ?? p.Description));
 
             return id;
         }

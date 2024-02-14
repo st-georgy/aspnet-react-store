@@ -44,17 +44,23 @@ export default function AuthForm({
     e.preventDefault();
     if (!validateForm()) return;
 
-    endpoint(formData).then((success) => {
-      if (success && formType === FormType.Login)
-        window.location.href = '/?loginSuccess=true';
-      else if (success && formType === FormType.Register)
-        window.location.href = '/login?registerSuccess=true';
-      else {
+    endpoint(formData)
+      .then((success) => {
+        if (success && formType === FormType.Login)
+          window.location.href = '/?loginSuccess=true';
+        else if (success && formType === FormType.Register)
+          window.location.href = '/login?registerSuccess=true';
+        else {
+          setFormData({ username: '', email: '', password: '' });
+          setFormErrors({ username: '', email: '', password: '' });
+          setAlert(true);
+        }
+      })
+      .catch(() => {
         setFormData({ username: '', email: '', password: '' });
         setFormErrors({ username: '', email: '', password: '' });
         setAlert(true);
-      }
-    });
+      });
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {

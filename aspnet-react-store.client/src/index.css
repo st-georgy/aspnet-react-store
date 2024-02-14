@@ -4,7 +4,7 @@
   font-weight: 400;
   line-height: 1.5;
   font-synthesis: none;
-  font-family: 'Roboto, sans-serif';
+  font-family: 'Circular, Roboto, sans-serif' !important;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -38,6 +38,10 @@ a:visited {
   color: #1873d5;
 }
 
+.MuiMenuItem-root {
+  color: black !important;
+}
+
 .menu-username {
   color: #888;
   font-size: 0.9rem;
@@ -47,4 +51,22 @@ a:visited {
   margin-left: 5px;
   display: flex;
   flex-direction: column;
+}
+
+.options-grid {
+  padding-top: 0px !important;
+  padding-left: 64px !important;
+}
+
+.options-grid h2,
+.options-grid h1 {
+  margin-top: 0px !important;
+}
+
+& .MuiTabs-indicator {
+  display: none;
+}
+
+& .Mui-selected {
+  color: #000 !important;
 }

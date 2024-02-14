@@ -14,6 +14,9 @@ namespace aspnet_react_store.Application.Services
         private readonly IPasswordHashProvider _passwordHasher = passwordHasher;
         private readonly IJwtProvider _jwtProvider = jwtProvider;
 
+        public async Task<User> GetUserById(int id) =>
+            await _usersRepository.GetById(id);
+
         public async Task<string> Login(string email, string password)
         {
             var user = await _usersRepository.GetByEmail(email);
@@ -42,5 +45,8 @@ namespace aspnet_react_store.Application.Services
             else
                 throw new Exception("Failed to register: " + user.Error);
         }
+
+        public async Task<int> UpdateUser(int id, string? username, string? email) =>
+            await _usersRepository.Update(id, username, email);
     }
 }

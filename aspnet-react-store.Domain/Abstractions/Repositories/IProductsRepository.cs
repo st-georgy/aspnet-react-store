@@ -8,6 +8,6 @@ namespace aspnet_react_store.Domain.Abstractions.Repositories
         Task<int> Delete(int id);
         Task<IEnumerable<Product>> Get();
         Task<IEnumerable<Product>> Get(int? startId, int? count, string? searchText);
-        Task<int> Update(int id, string name, decimal price, string description);
+        Task<int> Update(int id, string? name, decimal? price, string? description);
     }
 }

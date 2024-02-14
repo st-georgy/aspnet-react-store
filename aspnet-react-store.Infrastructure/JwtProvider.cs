@@ -1,10 +1,10 @@
-﻿using System.Text;
+﻿using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
-using System.IdentityModel.Tokens.Jwt;
+using System.Text;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
-using aspnet_react_store.Domain.Models;
 using aspnet_react_store.Domain.Abstractions.Auth;
+using aspnet_react_store.Domain.Models;
 
 namespace aspnet_react_store.Infrastructure
 {
@@ -16,7 +16,9 @@ namespace aspnet_react_store.Infrastructure
         {
             Claim[] claims = [
                 new("userId", user.Id.ToString()),
-                new("role", user.UserRole.ToString())
+                new("role", user.UserRole.ToString()),
+                new("userName", user.UserName),
+                new("email", user.Email)
                 ];
 
             var signingCredentials = new SigningCredentials(

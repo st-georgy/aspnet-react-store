@@ -1,5 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
-using aspnet_react_store.API.Contracts;
+using aspnet_react_store.API.Contracts.Responses;
 using aspnet_react_store.Domain.Abstractions.Services;
 
 namespace aspnet_react_store.Server.Controllers
