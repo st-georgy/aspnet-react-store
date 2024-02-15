@@ -9,6 +9,7 @@ namespace aspnet_react_store.Domain.Abstractions.Repositories
         Task<User> GetByUsername(string username);
         Task Add(User user);
         Task<int> Update(int id, string? username, string? email);
+        Task<int> UpdatePassword(int id, string passwordHash);
         Task<int> GetNextId();
     }
 }

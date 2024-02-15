@@ -8,5 +8,6 @@ namespace aspnet_react_store.Domain.Abstractions.Services
         Task Register(string username, string email, string password);
         Task<User> GetUserById(int id);
         Task<int> UpdateUser(int id, string? username, string? email);
+        Task<int> UpdatePassword(int id, string oldPassword, string newPassword);
     }
 }

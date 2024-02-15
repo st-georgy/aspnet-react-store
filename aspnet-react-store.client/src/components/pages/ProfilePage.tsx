@@ -6,6 +6,7 @@ import NavBar from '../navigation/NavBar';
 import TabPanel from './ProfilePage/ProfileTabPanel';
 import ProfileTabs from './ProfilePage/ProfileTabs';
 import ProfileTabAccount from './ProfilePage/Tabs/ProfileTabAccount';
+import ProfileTabSecurity from './ProfilePage/Tabs/ProfileTabSecurity';
 
 interface ProfilePageProps {
   currentUser: IUser | null;
@@ -54,11 +55,10 @@ export default function ProfilePage({
             />
             <TabPanel value={tabValue} index={1} header='Заказы'></TabPanel>
             <TabPanel value={tabValue} index={2} header='Платежи'></TabPanel>
-            <TabPanel
-              value={tabValue}
+            <ProfileTabSecurity
+              tabValue={tabValue}
               index={3}
-              header='Деактивация'
-            ></TabPanel>
+            ></ProfileTabSecurity>
           </Grid>
         </Grid>
       </Container>

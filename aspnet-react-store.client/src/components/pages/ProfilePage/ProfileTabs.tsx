@@ -40,7 +40,7 @@ export default function ProfileTabs({ tabValue, onChange }: ProfileTabsProps) {
       <Tab label='Профиль' {...a11yProps(0)} sx={tabStyle(0)}></Tab>
       <Tab label='Заказы' {...a11yProps(2)} sx={tabStyle(1)}></Tab>
       <Tab label='Платежи' {...a11yProps(3)} sx={tabStyle(2)}></Tab>
-      <Tab label='Деактивация' {...a11yProps(4)} sx={tabStyle(3)}></Tab>
+      <Tab label='Безопасность' {...a11yProps(4)} sx={tabStyle(3)}></Tab>
     </Tabs>
   );
 }

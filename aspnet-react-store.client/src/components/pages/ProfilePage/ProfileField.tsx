@@ -4,10 +4,10 @@ import React, { useEffect, useState } from 'react';
 interface ProfileFieldProps {
   title: string;
   value?: string | null | undefined;
-  editing: boolean;
+  editing?: boolean;
   id: string;
   isRequired?: boolean;
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 export default function ProfileField({
@@ -27,7 +27,7 @@ export default function ProfileField({
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    onChange(e);
+    onChange!(e);
     setError('');
   };
 

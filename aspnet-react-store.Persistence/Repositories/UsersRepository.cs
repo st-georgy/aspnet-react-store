@@ -94,6 +94,16 @@ namespace aspnet_react_store.Persistence.Repositories
             return id;
         }
 
+        public async Task<int> UpdatePassword(int id, string passwordHash)
+        {
+            await _context.Users
+                .Where(u => u.Id == id)
+                .ExecuteUpdateAsync(up => up
+                    .SetProperty(u => u.PasswordHash, u => passwordHash));
+
+            return id;
+        }
+
         public async Task<int> GetNextId() =>
             await _context.GetNextSequenceValue("User_Id_seq");
     }

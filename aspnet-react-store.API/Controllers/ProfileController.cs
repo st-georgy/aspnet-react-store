@@ -63,23 +63,47 @@ namespace aspnet_react_store.API.Controllers
             }
         }
 
-        [Authorize]
         [HttpGet("me")]
         public async Task<ActionResult<UsersResponse>> GetUser()
         {
-            var userId = int.Parse((User.FindFirst("userId")?.Value)
-                    ?? throw new Exception("User is invalid"));
+            try
+            {
+                var userId = int.Parse((User.FindFirst("userId")?.Value)
+                        ?? throw new Exception("User is invalid"));
 
-            var user = await _usersService.GetUserById(userId);
-            var userInfo = await _userInfosService.GetUserInfo(userId);
+                var user = await _usersService.GetUserById(userId);
+                var userInfo = await _userInfosService.GetUserInfo(userId);
 
-            var shortName = "Пользователь";
+                var shortName = "Пользователь";
 
-            if (!string.IsNullOrWhiteSpace(userInfo.FirstName))
-                shortName = string.IsNullOrWhiteSpace(userInfo.LastName) ?
-                    userInfo.FirstName : $"{userInfo.FirstName} {userInfo.LastName[0]}.";
+                if (!string.IsNullOrWhiteSpace(userInfo.FirstName))
+                    shortName = string.IsNullOrWhiteSpace(userInfo.LastName) ?
+                        userInfo.FirstName : $"{userInfo.FirstName} {userInfo.LastName[0]}.";
 
-            return Ok(new UsersResponse(user.UserName, shortName, user.UserRole.ToString().ToLower()));
+                return Ok(new UsersResponse(user.UserName, shortName, user.UserRole.ToString().ToLower()));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpPut("password")]
+        public async Task<ActionResult> UpdatePassword(PasswordsRequest request)
+        {
+            try
+            {
+                var userId = int.Parse((User.FindFirst("userId")?.Value)
+                        ?? throw new Exception("User is invalid"));
+
+                await _usersService.UpdatePassword(userId, request.OldPassword, request.NewPassword);
+
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
     }
 

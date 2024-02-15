@@ -48,5 +48,21 @@ namespace aspnet_react_store.Application.Services
 
         public async Task<int> UpdateUser(int id, string? username, string? email) =>
             await _usersRepository.Update(id, username, email);
+
+        public async Task<int> UpdatePassword(int id, string oldPassword, string newPassword)
+        {
+            var oldPasswordHash = _passwordHasher.Generate(oldPassword);
+
+            var user = await _usersRepository.GetById(id);
+
+            if (user.PasswordHash != oldPasswordHash)
+                throw new Exception("Old password is incorrect.");
+
+            var newPasswordHash = _passwordHasher.Generate(newPassword);
+
+            await _usersRepository.UpdatePassword(id, newPasswordHash);
+
+            return id;
+        }
     }
 }

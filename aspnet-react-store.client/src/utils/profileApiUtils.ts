@@ -38,3 +38,23 @@ export const updateProfile = async (
     return handleError(error);
   }
 };
+
+export const updatePassword = async (
+  oldPassword: string,
+  newPassword: string
+): Promise<boolean> => {
+  try {
+    await axios.put(
+      '/api/profile/password',
+      { oldPassword, newPassword },
+      {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }
+    );
+    return true;
+  } catch (error) {
+    return handleError(error);
+  }
+};
