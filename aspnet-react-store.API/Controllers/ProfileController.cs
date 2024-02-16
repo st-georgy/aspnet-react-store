@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using aspnet_react_store.API.Contracts.Requests.UserProfiles;
 using aspnet_react_store.API.Contracts.Responses;
 using aspnet_react_store.Domain.Abstractions.Services;
+using aspnet_react_store.Domain.Exceptions;
 
 namespace aspnet_react_store.API.Controllers
 {
@@ -19,8 +20,10 @@ namespace aspnet_react_store.API.Controllers
         {
             try
             {
-                var userId = int.Parse((User.FindFirst("userId")?.Value)
-                    ?? throw new Exception("User is invalid"));
+                var userIdClaim = User.FindFirst("userId");
+
+                if (userIdClaim == null || !int.TryParse(userIdClaim.Value, out int userId))
+                    throw new ClaimsException("User ID is invalid or missing");
 
                 var user = await _usersService.GetUserById(userId);
                 var userInfo = await _userInfosService.GetUserInfo(userId);
@@ -34,9 +37,17 @@ namespace aspnet_react_store.API.Controllers
                     userInfo.JoinDate
                 ));
             }
-            catch (Exception ex)
+            catch (EntityNotFoundException ex)
+            {
+                return NotFound(ex.Message);
+            }
+            catch (ClaimsException ex)
             {
                 return BadRequest(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, $"An error occurred: {ex.Message}");
             }
         }
 
@@ -45,8 +56,10 @@ namespace aspnet_react_store.API.Controllers
         {
             try
             {
-                var userId = int.Parse((User.FindFirst("userId")?.Value)
-                    ?? throw new Exception("User is invalid"));
+                var userIdClaim = User.FindFirst("userId");
+
+                if (userIdClaim == null || !int.TryParse(userIdClaim.Value, out int userId))
+                    throw new ClaimsException("User ID is invalid or missing");
 
                 await _usersService.UpdateUser(userId, request.UserName, request.Email);
                 await _userInfosService.UpdateUserInfo(
@@ -57,9 +70,21 @@ namespace aspnet_react_store.API.Controllers
 
                 return Ok();
             }
-            catch (Exception ex)
+            catch (ArgumentException ex)
+            {
+                return BadRequest($"Invalid argument: {ex.Message}");
+            }
+            catch (UserExistsException ex)
+            {
+                return BadRequest($"User already exists: {ex.Message}");
+            }
+            catch (ClaimsException ex)
             {
                 return BadRequest(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, $"An error occurred: {ex.Message}");
             }
         }
 
@@ -68,8 +93,10 @@ namespace aspnet_react_store.API.Controllers
         {
             try
             {
-                var userId = int.Parse((User.FindFirst("userId")?.Value)
-                        ?? throw new Exception("User is invalid"));
+                var userIdClaim = User.FindFirst("userId");
+
+                if (userIdClaim == null || !int.TryParse(userIdClaim.Value, out int userId))
+                    throw new ClaimsException("User ID is invalid or missing");
 
                 var user = await _usersService.GetUserById(userId);
                 var userInfo = await _userInfosService.GetUserInfo(userId);
@@ -82,9 +109,17 @@ namespace aspnet_react_store.API.Controllers
 
                 return Ok(new UsersResponse(user.UserName, shortName, user.UserRole.ToString().ToLower()));
             }
-            catch (Exception ex)
+            catch (EntityNotFoundException ex)
+            {
+                return NotFound(ex.Message);
+            }
+            catch (ClaimsException ex)
             {
                 return BadRequest(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, $"An error occurred: {ex.Message}");
             }
         }
 
@@ -93,18 +128,23 @@ namespace aspnet_react_store.API.Controllers
         {
             try
             {
-                var userId = int.Parse((User.FindFirst("userId")?.Value)
-                        ?? throw new Exception("User is invalid"));
+                var userIdClaim = User.FindFirst("userId");
+
+                if (userIdClaim == null || !int.TryParse(userIdClaim.Value, out int userId))
+                    throw new ClaimsException("User ID is invalid or missing");
 
                 await _usersService.UpdatePassword(userId, request.OldPassword, request.NewPassword);
 
                 return Ok();
             }
-            catch (Exception ex)
+            catch (ClaimsException ex)
             {
                 return BadRequest(ex.Message);
             }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, $"An error occurred: {ex.Message}");
+            }
         }
     }
-
 }

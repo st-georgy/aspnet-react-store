@@ -1,6 +1,7 @@
 ﻿using aspnet_react_store.Domain.Abstractions.Auth;
 using aspnet_react_store.Domain.Abstractions.Repositories;
 using aspnet_react_store.Domain.Abstractions.Services;
+using aspnet_react_store.Domain.Exceptions;
 using aspnet_react_store.Domain.Models;
 
 namespace aspnet_react_store.Application.Services
@@ -24,7 +25,7 @@ namespace aspnet_react_store.Application.Services
             var result = _passwordHasher.Verify(password, user.PasswordHash);
 
             if (result == false)
-                throw new Exception("Failed to login");
+                throw new AuthorizationFailedException("Failed to login");
 
             var token = _jwtProvider.GenerateToken(user);
 
@@ -43,7 +44,7 @@ namespace aspnet_react_store.Application.Services
             if (user.IsSuccess)
                 await _usersRepository.Add(user.Value);
             else
-                throw new Exception("Failed to register: " + user.Error);
+                throw new RegisterFailedException(user.Error);
         }
 
         public async Task<int> UpdateUser(int id, string? username, string? email) =>
@@ -56,7 +57,7 @@ namespace aspnet_react_store.Application.Services
             var user = await _usersRepository.GetById(id);
 
             if (user.PasswordHash != oldPasswordHash)
-                throw new Exception("Old password is incorrect.");
+                throw new AuthorizationFailedException("Old password is incorrect.");
 
             var newPasswordHash = _passwordHasher.Generate(newPassword);
 

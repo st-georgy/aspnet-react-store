@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using aspnet_react_store.API.Contracts.Requests.Users;
 using aspnet_react_store.Domain.Abstractions.Services;
+using aspnet_react_store.Domain.Exceptions;
 
 namespace aspnet_react_store.API.Controllers
 {
@@ -20,9 +21,17 @@ namespace aspnet_react_store.API.Controllers
 
                 return Ok("Successefully registered!");
             }
+            catch (UserExistsException ex)
+            {
+                return BadRequest($"User with the provided username or email already exists: {ex.Message}");
+            }
+            catch (RegisterFailedException ex)
+            {
+                return BadRequest($"Failed to register user: {ex.Message}");
+            }
             catch (Exception ex)
             {
-                return BadRequest("Failed to create new account: " + ex.Message);
+                return StatusCode(StatusCodes.Status500InternalServerError, $"An error occurred: {ex.Message}");
             }
         }
 
@@ -37,9 +46,13 @@ namespace aspnet_react_store.API.Controllers
 
                 return Ok("Successefully logged in!");
             }
-            catch
+            catch (AuthorizationFailedException ex)
             {
-                return BadRequest("Failed to login");
+                return Unauthorized($"Authorization failed: {ex.Message}");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, $"An error occurred: {ex.Message}");
             }
         }
 

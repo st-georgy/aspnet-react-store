@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using aspnet_react_store.API.Contracts.Responses;
 using aspnet_react_store.Domain.Abstractions.Services;
+using aspnet_react_store.Domain.Exceptions;
 
 namespace aspnet_react_store.Server.Controllers
 {
@@ -30,9 +31,17 @@ namespace aspnet_react_store.Server.Controllers
 
                 return Ok(response);
             }
+            catch (ArgumentOutOfRangeException ex)
+            {
+                return BadRequest($"Invalid argument: {ex.ParamName}");
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest($"Invalid argument: {ex.Message}");
+            }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                return StatusCode(StatusCodes.Status500InternalServerError, $"An error occurred: {ex.Message}");
             }
         }
     }

@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using aspnet_react_store.Domain.Abstractions.Repositories;
+using aspnet_react_store.Domain.Exceptions;
 using aspnet_react_store.Domain.Models;
 using aspnet_react_store.Persistence.Entities;
 
@@ -16,7 +17,7 @@ namespace aspnet_react_store.Persistence.Repositories
             var userEntity = await _context.Users
                 .AsNoTracking()
                 .FirstOrDefaultAsync(u => u.Id == id)
-                    ?? throw new Exception("User not found");
+                    ?? throw new EntityNotFoundException("User not found");
 
             return _mapper.Map<User>(userEntity)!;
         }
@@ -26,7 +27,7 @@ namespace aspnet_react_store.Persistence.Repositories
             var userEntity = await _context.Users
                 .AsNoTracking()
                 .FirstOrDefaultAsync(u => u.Email == email)
-                    ?? throw new Exception("User not found");
+                    ?? throw new EntityNotFoundException("User not found");
 
             return _mapper.Map<User>(userEntity)!;
         }
@@ -36,7 +37,7 @@ namespace aspnet_react_store.Persistence.Repositories
             var userEntity = await _context.Users
                 .AsNoTracking()
                 .FirstOrDefaultAsync(u => u.UserName == username)
-                    ?? throw new Exception("User not found");
+                    ?? throw new EntityNotFoundException("User not found");
 
             return _mapper.Map<User>(userEntity)!;
         }
@@ -48,14 +49,14 @@ namespace aspnet_react_store.Persistence.Repositories
                 .FirstOrDefaultAsync(u => u.Email == user.Email);
 
             if (userEntityEmail is not null)
-                throw new Exception("Email is busy");
+                throw new EmailExistsException("Email is busy");
 
             var userEntityUsername = await _context.Users
                 .AsNoTracking()
                 .FirstOrDefaultAsync(u => u.UserName == user.UserName);
 
             if (userEntityUsername is not null)
-                throw new Exception("Username is busy");
+                throw new UsernameExistsException("Username is busy");
 
             var userEntity = _mapper.Map<UserEntity>(user)!;
 
@@ -69,21 +70,21 @@ namespace aspnet_react_store.Persistence.Repositories
                 return 0;
 
             if (username?.Trim().Length == 0 || email?.Trim().Length == 0)
-                throw new Exception("Username and email can not be white space.");
+                throw new ArgumentException("Username and email can not be white space.");
 
             var userEntityEmail = await _context.Users
                 .AsNoTracking()
                 .FirstOrDefaultAsync(u => u.Email == email && u.Id != id);
 
             if (userEntityEmail is not null)
-                throw new Exception("Email is busy");
+                throw new EmailExistsException("Email is busy");
 
             var userEntityUsername = await _context.Users
                 .AsNoTracking()
                 .FirstOrDefaultAsync(u => u.UserName == username && u.Id != id);
 
             if (userEntityUsername is not null)
-                throw new Exception("Username is busy");
+                throw new UsernameExistsException("Username is busy");
 
             await _context.Users
                 .Where(u => u.Id == id)

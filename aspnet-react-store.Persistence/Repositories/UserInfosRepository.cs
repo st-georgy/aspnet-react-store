@@ -1,6 +1,7 @@
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using aspnet_react_store.Domain.Abstractions.Repositories;
+using aspnet_react_store.Domain.Exceptions;
 using aspnet_react_store.Domain.Models;
 
 namespace aspnet_react_store.Persistence.Repositories
@@ -15,7 +16,7 @@ namespace aspnet_react_store.Persistence.Repositories
             var userInfo = await _context.UserInfos
                 .AsNoTracking()
                 .FirstOrDefaultAsync(ui => ui.UserId == userId)
-                    ?? throw new Exception("User info not found.");
+                    ?? throw new EntityNotFoundException("User info not found.");
 
             return _mapper.Map<UserInfo>(userInfo)!;
         }

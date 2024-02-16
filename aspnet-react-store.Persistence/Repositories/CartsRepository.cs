@@ -1,6 +1,7 @@
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using aspnet_react_store.Domain.Abstractions.Repositories;
+using aspnet_react_store.Domain.Exceptions;
 using aspnet_react_store.Domain.Models;
 
 namespace aspnet_react_store.Persistence.Repositories
@@ -26,12 +27,12 @@ namespace aspnet_react_store.Persistence.Repositories
             var cart = await _context.Carts
                 .Include(c => c.Products)
                 .FirstOrDefaultAsync(c => c.UserId == userId)
-                    ?? throw new Exception("User's cart not found.");
+                    ?? throw new EntityNotFoundException("User's cart not found.");
 
             var product = await _context.Products
                 .AsNoTracking()
                 .FirstOrDefaultAsync(p => p.Id == productId)
-                    ?? throw new Exception("Product not found.");
+                    ?? throw new EntityNotFoundException("Product not found.");
 
             cart!.Products.Add(product);
 
@@ -45,7 +46,7 @@ namespace aspnet_react_store.Persistence.Repositories
             var cart = await _context.Carts
                 .Include(c => c.Products)
                 .FirstOrDefaultAsync(c => c.UserId == userId)
-                    ?? throw new Exception("User's cart not found.");
+                    ?? throw new EntityNotFoundException("User's cart not found.");
 
             var product = await _context.Products
                 .AsNoTracking()
