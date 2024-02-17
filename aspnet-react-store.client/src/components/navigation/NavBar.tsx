@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import logoSvg from '../../assets/logo.svg';
 import { IUser } from '../../types/types';
-import SearchDrawer from '../pages/MainProductsPage/SearchDrawer';
+import SearchDrawer from '../pages/MainPage/SearchDrawer';
 import UserMenu from './UserMenu';
 
 interface NavBarProps {

@@ -49,24 +49,10 @@ namespace aspnet_react_store.API.Extensions
             services.AddAutoMapper(typeof(AutoMapperProfile));
         }
 
-        public static void AddApiProviders(
-            this IServiceCollection services,
-            IConfiguration configuration)
+        public static void AddApiProviders(this IServiceCollection services)
         {
             services.AddScoped<IJwtProvider, JwtProvider>();
             services.AddScoped<IPasswordHashProvider, PasswordHashProvider>();
-
-            services.AddSingleton<IImageUrlProvider>(provider =>
-            {
-                var accessor = provider.GetRequiredService<IHttpContextAccessor>();
-                var request = accessor.HttpContext!.Request;
-                var baseUrl = configuration["ASPNETCORE_URLS"]?.Split(';').Select(url => new Uri(url)).FirstOrDefault()?.ToString();
-
-                if (string.IsNullOrWhiteSpace(baseUrl))
-                    throw new Exception("Configuration file is incorrect (Check launchsettings.json)");
-
-                return new ImageUrlProvider(baseUrl);
-            });
         }
 
         public static void AddApiAuthentication(

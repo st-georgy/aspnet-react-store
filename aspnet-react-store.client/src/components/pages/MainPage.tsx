@@ -3,17 +3,14 @@ import { useLocation } from 'react-router-dom';
 import { IUser } from '../../types/types';
 import NavBar from '../navigation/NavBar';
 import ShowAlert from '../shared/ShowAlert';
-import ProductsList from './MainProductsPage/ProductsList';
+import ProductsList from './MainPage/ProductsList';
 
-interface ProductsPageProps {
+interface MainPageProps {
   currentUser: IUser | null;
   isAdmin: boolean;
 }
 
-export default function ProductsPage({
-  currentUser,
-  isAdmin,
-}: ProductsPageProps) {
+export default function MainPage({ currentUser, isAdmin }: MainPageProps) {
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const searchText = queryParams.get('searchText');

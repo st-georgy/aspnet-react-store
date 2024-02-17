@@ -91,8 +91,8 @@ namespace aspnet_react_store.Persistence
             modelBuilder.Entity<ProductEntity>().HasData(products);
 
             var images = new[] {
-                new ImageEntity { Id = 1, FilePath = "Images/products/1/1.png", ProductId = 1 },
-                new ImageEntity { Id = 2, FilePath = "Images/products/1/2.png", ProductId = 1 },
+                new ImageEntity { Id = 1, FilePath = "/Images/products/1/1.png", ProductId = 1 },
+                new ImageEntity { Id = 2, FilePath = "/Images/products/1/2.png", ProductId = 1 },
             };
             modelBuilder.Entity<ImageEntity>().HasData(images);
         }

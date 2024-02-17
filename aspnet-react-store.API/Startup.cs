@@ -18,7 +18,7 @@ namespace aspnet_react_store.Server
 
             services.Configure<JwtOptions>(Configuration.GetSection(nameof(JwtOptions)));
 
-            services.AddApiProviders(Configuration);
+            services.AddApiProviders();
             services.AddApiDbContext(Configuration);
             services.AddApiAuthentication(Configuration);
             services.AddApiEntityServices();

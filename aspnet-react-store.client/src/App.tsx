@@ -1,11 +1,12 @@
-﻿import '@fontsource/roboto/300.css';
+import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
 import { useEffect, useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import AuthPage from './components/pages/AuthPage';
-import MainProductsPage from './components/pages/MainProductsPage';
+import MainPage from './components/pages/MainPage';
+import NotFoundPage from './components/pages/NotFoundPage';
 import ProfilePage from './components/pages/ProfilePage';
 import Footer from './components/shared/Footer';
 import { IUser } from './types/types';
@@ -38,18 +39,15 @@ export default function App() {
 
   return (
     <>
+      <div className='app'>
       <Routes>
         <Route
           path='/'
-          element={
-            <MainProductsPage isAdmin={isAdmin} currentUser={currentUser} />
-          }
+            element={<MainPage isAdmin={isAdmin} currentUser={currentUser} />}
         />
         <Route
           path='/products'
-          element={
-            <MainProductsPage isAdmin={isAdmin} currentUser={currentUser} />
-          }
+            element={<MainPage isAdmin={isAdmin} currentUser={currentUser} />}
         />
         <Route path='/login' element={<AuthPage />} />
         {isLoggedIn && (
@@ -61,9 +59,10 @@ export default function App() {
           />
         )}
         {!isLoggedIn && <Route path='/profile' element={<AuthPage />} />}
+          <Route path='*' element={<NotFoundPage />} />
       </Routes>
-      <hr style={{ marginTop: '3rem' }} />
       <Footer />
+      </div>
     </>
   );
 }

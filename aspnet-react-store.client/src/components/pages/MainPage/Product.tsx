@@ -20,13 +20,13 @@ export default function Product({
   return (
     <animated.div style={trail[index]} className='product-block'>
       <Card elevation={0}>
-        <div className='image-container'>
-          <ProductImages images={product.images} />
-        </div>
+          <div className='image-container'>
+            <ProductImages images={product.images} />
+          </div>
         <CardContent className='product-content'>
-          <Typography variant='h6' className='product-name'>
-            {product?.name}
-          </Typography>
+            <Typography variant='h6' className='product-name'>
+              {product?.name}
+            </Typography>
           <Typography variant='body2'>
             <em>{'₽' + product?.price + ' руб.'}</em>
           </Typography>

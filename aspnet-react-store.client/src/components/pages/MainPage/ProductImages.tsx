@@ -13,7 +13,7 @@ const PlaceholderImage = () => (
   <SwiperSlide>
     <Card elevation={0}>
       <img
-        src='src/assets/products/placeholder_light.png'
+        src='/src/assets/products/placeholder_light.png'
         alt='Placeholder'
         style={{ width: '100%' }}
       />

@@ -1,5 +1,6 @@
 :root {
-  margin: 50px 100px;
+  padding: 0px 100px;
+  padding-top: 50px;
   font-size: 1rem;
   font-weight: 400;
   line-height: 1.5;
@@ -26,6 +27,18 @@
 * {
   scrollbar-color: #888 #f1f1f1;
   scrollbar-width: thin;
+}
+
+.app {
+  min-height: 90vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.footer {
+  margin-top: auto;
+  text-align: center;
+  padding: 16px 0;
 }
 
 a,

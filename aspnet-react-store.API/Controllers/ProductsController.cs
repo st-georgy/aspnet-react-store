@@ -7,11 +7,10 @@ namespace aspnet_react_store.Server.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class ProductsController(IProductsService productsService, IImageUrlProvider imageUrlProvider) : ControllerBase
+    public class ProductsController(IProductsService productsService) : ControllerBase
     {
 
         private readonly IProductsService _productsService = productsService;
-        private readonly IImageUrlProvider _imageUrlProvider = imageUrlProvider;
 
         [HttpGet]
         public async Task<ActionResult<IEnumerable<ProductsResponse>>> GetProducts(int? startId, int? count, string? searchText)
@@ -26,7 +25,7 @@ namespace aspnet_react_store.Server.Controllers
                     p.Price,
                     p.Description,
                     p.Images?
-                        .Select(i => new ImagesResponse(i.Id, _imageUrlProvider.GetImageUrl(i.FilePath)))
+                        .Select(i => new ImagesResponse(i.Id, i.FilePath))
                         .ToArray()));
 
                 return Ok(response);
