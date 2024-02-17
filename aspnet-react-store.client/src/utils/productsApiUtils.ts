@@ -19,3 +19,17 @@ export const getProducts = async (
     throw error;
   }
 };
+
+export const getProduct = async (id: number): Promise<IProduct | null> => {
+  try {
+    const response = await axios.get<IProduct>(`api/products/${id}`);
+    return response.data;
+  } catch (error) {
+    if (
+      axios.isAxiosError(error) &&
+      (error.response?.status === 400 || error.response?.status === 404)
+    )
+      return null;
+    throw error;
+  }
+};

@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using aspnet_react_store.Domain.Abstractions.Repositories;
+using aspnet_react_store.Domain.Exceptions;
 using aspnet_react_store.Domain.Models;
 using aspnet_react_store.Persistence.Entities;
 
@@ -11,6 +12,17 @@ namespace aspnet_react_store.Persistence.Repositories
 
         private readonly StoreDbContext _context = context;
         private readonly IMapper _mapper = mapper;
+
+        public async Task<Product> Get(int id)
+        {
+            var productEntity = await _context.Products
+                .AsNoTracking()
+                .Include(p => p.Images)
+                .FirstOrDefaultAsync(p => p.Id == id)
+                    ?? throw new EntityNotFoundException("Product not found");
+
+            return _mapper.Map<Product>(productEntity)!;
+        }
 
         public async Task<IEnumerable<Product>> Get()
         {

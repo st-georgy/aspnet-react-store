@@ -8,6 +8,9 @@ namespace aspnet_react_store.Application.Services
     {
         private readonly IProductsRepository _productsRepository = productsRepository;
 
+        public async Task<Product> GetProductById(int id) =>
+            await _productsRepository.Get(id);
+
         public async Task<IEnumerable<Product>> GetAllProducts() =>
             await _productsRepository.Get();
 

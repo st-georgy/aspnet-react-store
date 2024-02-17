@@ -1,4 +1,4 @@
-import '@fontsource/roboto/300.css';
+﻿import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
@@ -7,6 +7,7 @@ import { Route, Routes } from 'react-router-dom';
 import AuthPage from './components/pages/AuthPage';
 import MainPage from './components/pages/MainPage';
 import NotFoundPage from './components/pages/NotFoundPage';
+import ProductPage from './components/pages/ProductPage';
 import ProfilePage from './components/pages/ProfilePage';
 import Footer from './components/shared/Footer';
 import { IUser } from './types/types';
@@ -40,28 +41,34 @@ export default function App() {
   return (
     <>
       <div className='app'>
-      <Routes>
-        <Route
-          path='/'
-            element={<MainPage isAdmin={isAdmin} currentUser={currentUser} />}
-        />
-        <Route
-          path='/products'
-            element={<MainPage isAdmin={isAdmin} currentUser={currentUser} />}
-        />
-        <Route path='/login' element={<AuthPage />} />
-        {isLoggedIn && (
+        <Routes>
           <Route
-            path='/profile'
+            path='/'
+            element={<MainPage isAdmin={isAdmin} currentUser={currentUser} />}
+          />
+          <Route
+            path='/products'
+            element={<MainPage isAdmin={isAdmin} currentUser={currentUser} />}
+          />
+          <Route path='/login' element={<AuthPage />} />
+          {isLoggedIn && (
+            <Route
+              path='/profile'
+              element={
+                <ProfilePage isAdmin={isAdmin} currentUser={currentUser} />
+              }
+            />
+          )}
+          {!isLoggedIn && <Route path='/profile' element={<AuthPage />} />}
+          <Route
+            path='/products/:id'
             element={
-              <ProfilePage isAdmin={isAdmin} currentUser={currentUser} />
+              <ProductPage currentUser={currentUser} isAdmin={isAdmin} />
             }
           />
-        )}
-        {!isLoggedIn && <Route path='/profile' element={<AuthPage />} />}
           <Route path='*' element={<NotFoundPage />} />
-      </Routes>
-      <Footer />
+        </Routes>
+        <Footer />
       </div>
     </>
   );

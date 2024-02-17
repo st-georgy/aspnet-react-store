@@ -1,4 +1,5 @@
 import { Card, CardContent, Typography } from '@mui/material';
+import { Link } from 'react-router-dom';
 import { animated, useTrail } from 'react-spring';
 import { IProduct } from '../../../types/types';
 import '../../style/product.css';
@@ -20,13 +21,17 @@ export default function Product({
   return (
     <animated.div style={trail[index]} className='product-block'>
       <Card elevation={0}>
+        <Link to={`/products/${product.id}`}>
           <div className='image-container'>
             <ProductImages images={product.images} />
           </div>
+        </Link>
         <CardContent className='product-content'>
+          <Link to={`/products/${product.id}`}>
             <Typography variant='h6' className='product-name'>
               {product?.name}
             </Typography>
+          </Link>
           <Typography variant='body2'>
             <em>{'₽' + product?.price + ' руб.'}</em>
           </Typography>

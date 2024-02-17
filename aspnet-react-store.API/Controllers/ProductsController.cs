@@ -43,5 +43,35 @@ namespace aspnet_react_store.Server.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, $"An error occurred: {ex.Message}");
             }
         }
+
+        [HttpGet("{id}")]
+        public async Task<ActionResult<ProductsResponse>> GetProduct(int id)
+        {
+            if (id <= 0)
+                return BadRequest("Id is invalid");
+            try
+            {
+                var product = await _productsService.GetProductById(id);
+
+                var response = new ProductsResponse(
+                    product.Id,
+                    product.Name,
+                    product.Price,
+                    product.Description,
+                    product.Images?
+                        .Select(i => new ImagesResponse(i.Id, i.FilePath))
+                        .ToArray());
+
+                return Ok(response);
+            }
+            catch (EntityNotFoundException ex)
+            {
+                return NotFound(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, $"An error occurred: {ex.Message}");
+            }
+        }
     }
 }

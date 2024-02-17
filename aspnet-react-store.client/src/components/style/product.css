@@ -16,6 +16,16 @@
   border-radius: 0.5rem 0.5rem 0 0;
 }
 
+.image-container.big-img {
+  width: 460px;
+}
+
+.image-container.big-img img {
+  width: 460px;
+  height: 460px;
+  background-color: #fff;
+}
+
 .image-container img {
   width: 230px;
   height: 230px;
