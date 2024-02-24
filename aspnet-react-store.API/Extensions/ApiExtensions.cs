@@ -33,6 +33,7 @@ namespace aspnet_react_store.API.Extensions
         public static void AddApiEntityServices(this IServiceCollection services)
         {
             services.AddScoped<ICartsService, CartsService>();
+            services.AddScoped<ICategoriesService, CategoriesService>();
             services.AddScoped<IProductsService, ProductsService>();
             services.AddScoped<IImagesService, ImagesService>();
             services.AddScoped<IOrdersService, OrdersService>();
@@ -40,6 +41,7 @@ namespace aspnet_react_store.API.Extensions
             services.AddScoped<IUserInfosService, UserInfosService>();
 
             services.AddScoped<ICartsRepository, CartsRepository>();
+            services.AddScoped<ICategoriesRepository, CategoriesRepository>();
             services.AddScoped<IProductsRepository, ProductsRepository>();
             services.AddScoped<IImagesRepository, ImagesRepository>();
             services.AddScoped<IOrdersRepository, OrdersRepository>();

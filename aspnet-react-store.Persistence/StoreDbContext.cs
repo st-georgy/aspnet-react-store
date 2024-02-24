@@ -8,6 +8,7 @@ namespace aspnet_react_store.Persistence
     public class StoreDbContext(DbContextOptions<StoreDbContext> options) : DbContext(options)
     {
         public DbSet<CartEntity> Carts { get; set; } = null!;
+        public DbSet<CategoryEntity> Categories { get; set; } = null!;
         public DbSet<ImageEntity> Images { get; set; } = null!;
         public DbSet<OrderEntity> Orders { get; set; } = null!;
         public DbSet<ProductEntity> Products { get; set; } = null!;
@@ -20,13 +21,12 @@ namespace aspnet_react_store.Persistence
             modelBuilder.HasPostgresEnum<OrderStatusEnum>();
 
             modelBuilder.ApplyConfiguration(new CartConfiguration());
+            modelBuilder.ApplyConfiguration(new CategoryConfiguration());
             modelBuilder.ApplyConfiguration(new ImageConfiguration());
             modelBuilder.ApplyConfiguration(new OrderConfiguration());
             modelBuilder.ApplyConfiguration(new ProductConfiguration());
             modelBuilder.ApplyConfiguration(new UserConfiguration());
             modelBuilder.ApplyConfiguration(new UserInfoConfiguration());
-
-            LoadInitialData(modelBuilder);
         }
 
         public override int SaveChanges()
@@ -43,12 +43,6 @@ namespace aspnet_react_store.Persistence
             return base.SaveChangesAsync(cancellationToken);
         }
 
-        public async Task<int> GetNextSequenceValue(string sequenceName)
-        {
-            var sql = $"SELECT last_value FROM \"{sequenceName}\";";
-            return await Database.ExecuteSqlRawAsync(sql) + 1;
-        }
-
         private void ProcessAddedUserEntities()
         {
             foreach (var entry in ChangeTracker.Entries<UserEntity>())
@@ -61,40 +55,36 @@ namespace aspnet_react_store.Persistence
             }
         }
 
-        private static void LoadInitialData(ModelBuilder modelBuilder)
+        public async Task SeedData()
         {
+            var categories = new[]
+            {
+                new CategoryEntity { Name = "T-Shirts" },
+                new CategoryEntity { Name = "Pants" },
+                new CategoryEntity { Name = "Modern Clothes" }
+            };
+            await Categories.AddRangeAsync(categories);
+
             var users = new[] {
-                new UserEntity { Id = 1, UserName = "admin", Email = "admin@localhost", UserRole = UserRoleEnum.Admin, PasswordHash = "63a9f0ea7bb98050796b649e85481845" },
-                new UserEntity { Id = 2, UserName = "support", Email = "support@localhost", UserRole = UserRoleEnum.Support, PasswordHash = "434990c8a25d2be94863561ae98bd682" },
-                new UserEntity { Id = 3, UserName = "user", Email = "test@localhost", PasswordHash = "ee11cbb19052e40b07aac0ca060c23ee" },
+                new UserEntity { UserName = "admin", Email = "admin@localhost", UserRole = UserRoleEnum.Admin, PasswordHash = "63a9f0ea7bb98050796b649e85481845" },
+                new UserEntity { UserName = "support", Email = "support@localhost", UserRole = UserRoleEnum.Support, PasswordHash = "434990c8a25d2be94863561ae98bd682" },
+                new UserEntity { UserName = "user", Email = "test@localhost", PasswordHash = "ee11cbb19052e40b07aac0ca060c23ee" },
             };
-            modelBuilder.Entity<UserEntity>().HasData(users);
-
-            var userInfos = new[] {
-                new UserInfoEntity { Id = 1, UserId = 1 },
-                new UserInfoEntity { Id = 2, UserId = 2 },
-                new UserInfoEntity { Id = 3, UserId = 3 },
-            };
-            modelBuilder.Entity<UserInfoEntity>().HasData(userInfos);
-
-            var carts = new[] {
-                new CartEntity { Id = 1, UserId = 1 },
-                new CartEntity { Id = 2, UserId = 2 },
-                new CartEntity { Id = 3, UserId = 3 },
-            };
-            modelBuilder.Entity<CartEntity>().HasData(carts);
+            await Users.AddRangeAsync(users);
 
             var products = new[] {
-                new ProductEntity { Id = 1, Name = "T-Shirt", Price = 2300},
-                new ProductEntity { Id = 2, Name = "Jeans", Price = 4900},
+                new ProductEntity { Name = "T-Shirt", Quantity = 5, Price = 2300, Categories = [categories[0], categories[2]] },
+                new ProductEntity { Name = "Jeans", Quantity = 1, Discount = 0.5m, Price = 4900, Categories = [categories[1]] },
             };
-            modelBuilder.Entity<ProductEntity>().HasData(products);
+            await Products.AddRangeAsync(products);
 
             var images = new[] {
-                new ImageEntity { Id = 1, FilePath = "/Images/products/1/1.png", ProductId = 1 },
-                new ImageEntity { Id = 2, FilePath = "/Images/products/1/2.png", ProductId = 1 },
+                new ImageEntity { FilePath = "/Images/products/1/1.png", Product = products[0] },
+                new ImageEntity { FilePath = "/Images/products/1/2.png", Product = products[0] },
             };
-            modelBuilder.Entity<ImageEntity>().HasData(images);
+            await Images.AddRangeAsync(images);
+
+            await SaveChangesAsync();
         }
     }
 }

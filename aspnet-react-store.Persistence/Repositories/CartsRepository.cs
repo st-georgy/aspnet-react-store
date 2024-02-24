@@ -22,7 +22,7 @@ namespace aspnet_react_store.Persistence.Repositories
             return _mapper.Map<Cart>(cartEntity)!;
         }
 
-        public async Task<int> Add(int userId, int productId)
+        public async Task<int> AddToCart(int userId, int productId)
         {
             var cart = await _context.Carts
                 .Include(c => c.Products)
@@ -41,7 +41,7 @@ namespace aspnet_react_store.Persistence.Repositories
             return userId;
         }
 
-        public async Task<int> Remove(int userId, int productId)
+        public async Task<int> RemoveFromCart(int userId, int productId)
         {
             var cart = await _context.Carts
                 .Include(c => c.Products)

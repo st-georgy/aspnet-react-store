@@ -52,8 +52,10 @@ namespace aspnet_react_store.Server
                 endpoints.MapControllers();
             });
 
+            // TODO: Change to Migrations
             dbContext.Database.EnsureDeleted();
             dbContext.Database.EnsureCreated();
+            dbContext.SeedData().Wait();
         }
     }
 }

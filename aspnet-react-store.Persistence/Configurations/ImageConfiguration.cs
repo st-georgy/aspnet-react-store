@@ -13,10 +13,11 @@ namespace aspnet_react_store.Persistence.Configurations
             builder.HasKey(i => i.Id);
 
             builder.HasOne(i => i.Product)
-                .WithMany(p => p.Images);
+                .WithMany(p => p.Images)
+                .HasForeignKey(i => i.ProductId);
 
             builder.Property(i => i.FilePath)
-                .IsRequired();
+                .HasMaxLength(50);
         }
     }
 }

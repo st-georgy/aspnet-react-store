@@ -42,7 +42,7 @@ namespace aspnet_react_store.Persistence.Repositories
             return _mapper.Map<User>(userEntity)!;
         }
 
-        public async Task Add(User user)
+        public async Task Create(User user)
         {
             var userEntityEmail = await _context.Users
                 .AsNoTracking()
@@ -104,8 +104,5 @@ namespace aspnet_react_store.Persistence.Repositories
 
             return id;
         }
-
-        public async Task<int> GetNextId() =>
-            await _context.GetNextSequenceValue("User_Id_seq");
     }
 }

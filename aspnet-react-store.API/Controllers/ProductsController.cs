@@ -23,7 +23,12 @@ namespace aspnet_react_store.Server.Controllers
                     p.Id,
                     p.Name,
                     p.Price,
+                    p.Quantity,
+                    p.Discount,
                     p.Description,
+                    p.Categories?
+                        .Select(c => new CategoriesResponse(c.Id, c.Name))
+                        .ToArray(),
                     p.Images?
                         .Select(i => new ImagesResponse(i.Id, i.FilePath))
                         .ToArray()));
@@ -57,7 +62,12 @@ namespace aspnet_react_store.Server.Controllers
                     product.Id,
                     product.Name,
                     product.Price,
+                    product.Quantity,
+                    product.Discount,
                     product.Description,
+                    product.Categories?
+                        .Select(c => new CategoriesResponse(c.Id, c.Name))
+                        .ToArray(),
                     product.Images?
                         .Select(i => new ImagesResponse(i.Id, i.FilePath))
                         .ToArray());

@@ -50,6 +50,10 @@ namespace aspnet_react_store.API.Controllers
             {
                 return Unauthorized($"Authorization failed: {ex.Message}");
             }
+            catch (EntityNotFoundException)
+            {
+                return Unauthorized($"Authorization failed: Failed to login");
+            }
             catch (Exception ex)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, $"An error occurred: {ex.Message}");

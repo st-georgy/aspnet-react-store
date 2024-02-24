@@ -15,5 +15,6 @@ namespace aspnet_react_store.Persistence.Entities
         public UserInfoEntity? UserInfo { get; set; }
 
         public List<OrderEntity> Orders { get; set; } = [];
+        public List<ProductEntity> Products { get; set; } = [];
     }
 }

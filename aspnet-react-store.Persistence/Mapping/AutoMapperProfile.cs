@@ -11,6 +11,7 @@ namespace aspnet_react_store.Persistence.Mapping
         public AutoMapperProfile()
         {
             CreateMap<Cart, CartEntity>().ReverseMap();
+            CreateMap<Category, CategoryEntity>().ReverseMap();
             CreateMap<Image, ImageEntity>().ReverseMap();
             CreateMap<Order, OrderEntity>().ReverseMap();
             CreateMap<Product, ProductEntity>().ReverseMap();

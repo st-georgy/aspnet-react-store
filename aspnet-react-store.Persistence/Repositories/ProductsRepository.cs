@@ -18,6 +18,7 @@ namespace aspnet_react_store.Persistence.Repositories
             var productEntity = await _context.Products
                 .AsNoTracking()
                 .Include(p => p.Images)
+                .Include(p => p.Categories)
                 .FirstOrDefaultAsync(p => p.Id == id)
                     ?? throw new EntityNotFoundException("Product not found");
 
@@ -29,6 +30,7 @@ namespace aspnet_react_store.Persistence.Repositories
             var productEntities = await _context.Products
                 .AsNoTracking()
                 .Include(p => p.Images)
+                .Include(p => p.Categories)
                 .ToListAsync();
 
             return productEntities.Select(p => _mapper.Map<Product>(p)!);
@@ -70,7 +72,10 @@ namespace aspnet_react_store.Persistence.Repositories
 
         public async Task<IEnumerable<Product>> Get(int? startId, int? count, string? searchText)
         {
-            var query = _context.Products.Include(p => p.Images).AsQueryable();
+            var query = _context.Products
+                .Include(p => p.Images)
+                .Include(p => p.Categories)
+                .AsQueryable();
 
             if (!string.IsNullOrWhiteSpace(searchText))
             {

@@ -4,6 +4,9 @@
         int Id,
         string Name,
         decimal Price,
+        int Quantity,
+        decimal Discount,
         string? Description,
+        CategoriesResponse[]? Categories,
         ImagesResponse[]? Images);
 }

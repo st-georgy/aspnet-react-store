@@ -12,11 +12,24 @@ namespace aspnet_react_store.Persistence.Configurations
 
             builder.HasKey(i => i.Id);
 
-            builder.HasOne(i => i.User)
-                .WithOne(u => u.UserInfo);
+            builder.HasIndex(i => i.UserId, "UserInfo_UserId_key")
+                .IsUnique();
+
+            builder.Property(i => i.FirstName)
+                .HasMaxLength(30);
+
+            builder.Property(i => i.LastName)
+                .HasMaxLength(30);
+
+            builder.Property(i => i.MiddleName)
+                .HasMaxLength(30);
 
             builder.Property(i => i.JoinDate)
                 .HasDefaultValueSql("now()");
+
+            builder.HasOne(i => i.User)
+                .WithOne(u => u.UserInfo)
+                .HasForeignKey<UserInfoEntity>(i => i.UserId);
         }
     }
 }

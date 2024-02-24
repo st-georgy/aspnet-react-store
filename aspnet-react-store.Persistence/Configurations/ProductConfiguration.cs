@@ -12,19 +12,18 @@ namespace aspnet_react_store.Persistence.Configurations
 
             builder.HasKey(p => p.Id);
 
-            builder.HasMany(p => p.Carts)
-                .WithMany(c => c.Products)
-                .UsingEntity("ProductCart");
+            builder.Property(p => p.Description)
+                .HasMaxLength(1024);
 
-            builder.HasMany(p => p.Orders)
-                .WithMany(o => o.Products)
-                .UsingEntity("ProductOrder");
+            builder.Property(p => p.Discount)
+                .HasPrecision(3, 2)
+                .HasDefaultValueSql("0");
 
             builder.Property(p => p.Name)
-                .IsRequired();
+                .HasMaxLength(50);
 
             builder.Property(p => p.Price)
-                .IsRequired();
+                .HasPrecision(100, 2);
 
             builder.ToTable(t => t.HasCheckConstraint("ValidPrice", "\"Price\" > 0"));
         }

@@ -15,20 +15,30 @@ namespace aspnet_react_store.Persistence.Configurations
 
             builder.HasAlternateKey(u => u.UserName);
 
-            builder.HasOne(u => u.Cart)
-                .WithOne(c => c.User);
-
-            builder.HasOne(u => u.UserInfo)
-                .WithOne(i => i.User);
-
-            builder.HasMany(u => u.Orders)
-                .WithOne(o => o.User);
-
-            builder.Property(u => u.UserName)
-                .IsRequired();
+            builder.Property(u => u.Email)
+                .HasMaxLength(50);
 
             builder.Property(u => u.PasswordHash)
-                .IsRequired();
+                .HasMaxLength(32);
+
+            builder.Property(u => u.UserName)
+                .HasMaxLength(30);
+
+            builder.HasMany(u => u.Products)
+                .WithMany(p => p.Users)
+                .UsingEntity<Dictionary<string, object>>(
+                    "ProductFavorite",
+                    r => r.HasOne<ProductEntity>()
+                        .WithMany()
+                        .HasForeignKey("ProductId"),
+                    l => l.HasOne<UserEntity>()
+                        .WithMany()
+                        .HasForeignKey("UserId"),
+                    j =>
+                    {
+                        j.HasKey("UserId", "ProductId");
+                        j.ToTable("ProductFavorite");
+                    });
 
             builder.Property(u => u.UserRole)
                 .HasDefaultValue(UserRoleEnum.User);

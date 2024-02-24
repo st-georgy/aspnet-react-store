@@ -36,13 +36,12 @@ namespace aspnet_react_store.Application.Services
         {
             var passwordHash = _passwordHasher.Generate(password);
 
-
             var user = User.Create(
-                await _usersRepository.GetNextId(), username, email, passwordHash, null, null
+                0, username, email, passwordHash, null, null, [], []
             );
 
             if (user.IsSuccess)
-                await _usersRepository.Add(user.Value);
+                await _usersRepository.Create(user.Value);
             else
                 throw new RegisterFailedException(user.Error);
         }

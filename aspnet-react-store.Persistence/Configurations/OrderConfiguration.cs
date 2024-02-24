@@ -13,15 +13,39 @@ namespace aspnet_react_store.Persistence.Configurations
 
             builder.HasKey(o => o.Id);
 
-            builder.HasMany(o => o.Products)
-                .WithMany(p => p.Orders)
-                .UsingEntity(e => e.ToTable("ProductOrder"));
+            builder.Property(o => o.TotalPrice)
+                .HasPrecision(100, 2)
+                .HasDefaultValueSql("0");
 
-            builder.HasOne(o => o.User)
-                .WithMany(u => u.Orders);
+            builder.Property(o => o.TotalProducts)
+                .HasDefaultValueSql("0");
+
+            builder.Property(o => o.Discount)
+                .HasPrecision(3, 2)
+                .HasDefaultValueSql("0");
 
             builder.Property(o => o.OrderStatus)
                 .HasDefaultValue(OrderStatusEnum.Pending);
+
+            builder.HasOne(o => o.User)
+                .WithMany(u => u.Orders)
+                .HasForeignKey(o => o.UserId);
+
+            builder.HasMany(c => c.Products)
+                .WithMany(p => p.Orders)
+                .UsingEntity<Dictionary<string, object>>(
+                    "ProductCart",
+                    r => r.HasOne<ProductEntity>()
+                        .WithMany()
+                        .HasForeignKey("ProductId"),
+                    l => l.HasOne<OrderEntity>()
+                        .WithMany()
+                        .HasForeignKey("OrderId"),
+                    j =>
+                    {
+                        j.HasKey("OrderId", "ProductId");
+                        j.ToTable("ProductOrder");
+                    });
         }
     }
 }

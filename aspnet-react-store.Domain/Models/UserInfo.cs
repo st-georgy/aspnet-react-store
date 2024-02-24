@@ -21,6 +21,9 @@ namespace aspnet_react_store.Domain.Models
 
         public static Result<UserInfo> Create(int id, string? firstName, string? middleName, string? lastName, DateTime? joinDate)
         {
+            if (id < 0)
+                return Result.Failure<UserInfo>("Id must be greater than 0.");
+
             joinDate ??= DateTime.Now;
             var userInfo = new UserInfo(id, firstName, middleName, lastName, joinDate.Value);
 

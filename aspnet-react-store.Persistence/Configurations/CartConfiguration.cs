@@ -12,12 +12,39 @@ namespace aspnet_react_store.Persistence.Configurations
 
             builder.HasKey(c => c.Id);
 
-            builder.HasMany(c => c.Products)
-                .WithMany(p => p.Carts)
-                .UsingEntity(e => e.ToTable("ProductCart"));
+            builder.HasIndex(c => c.UserId, "Cart_UserId_key")
+                .IsUnique();
+
+            builder.Property(c => c.Discount)
+                .HasPrecision(3, 2)
+                .HasDefaultValueSql("0");
+
+            builder.Property(c => c.TotalPrice)
+                .HasPrecision(100, 2)
+                .HasDefaultValueSql("0");
+
+            builder.Property(c => c.TotalProducts)
+                .HasDefaultValueSql("0");
 
             builder.HasOne(c => c.User)
-                .WithOne(c => c.Cart);
+                .WithOne(c => c.Cart)
+                .HasForeignKey<CartEntity>(c => c.UserId);
+
+            builder.HasMany(c => c.Products)
+                .WithMany(p => p.Carts)
+                .UsingEntity<Dictionary<string, object>>(
+                    "ProductCart",
+                    r => r.HasOne<ProductEntity>()
+                        .WithMany()
+                        .HasForeignKey("ProductId"),
+                    l => l.HasOne<CartEntity>()
+                        .WithMany()
+                        .HasForeignKey("CartId"),
+                    j =>
+                    {
+                        j.HasKey("CartId", "ProductId");
+                        j.ToTable("ProductCart");
+                    });
         }
     }
 }
