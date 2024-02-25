@@ -16,6 +16,17 @@ namespace aspnet_react_store.Server
 
             services.AddHttpContextAccessor();
 
+            services.AddEndpointsApiExplorer();
+            services.AddSwaggerGen(options =>
+            {
+                options.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo
+                {
+                    Version = "v1",
+                    Title = "asp-react-store API",
+                    Description = "An ASP.NET CORE Web API for online-store"
+                });
+            }); 
+
             services.Configure<JwtOptions>(Configuration.GetSection(nameof(JwtOptions)));
 
             services.AddApiProviders();
@@ -51,6 +62,17 @@ namespace aspnet_react_store.Server
             {
                 endpoints.MapControllers();
             });
+
+            if (env.IsDevelopment())
+            {
+                app.UseSwagger();
+                app.UseSwaggerUI(options =>
+                {
+                    options.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
+                    options.RoutePrefix = string.Empty;
+                    options.DocumentTitle = "Swagger UI";
+                });
+            }
 
             // TODO: Change to Migrations
             dbContext.Database.EnsureDeleted();

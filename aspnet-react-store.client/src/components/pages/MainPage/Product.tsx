@@ -1,4 +1,11 @@
-import { Card, CardContent, Typography } from '@mui/material';
+import { AddShoppingCartOutlined, FavoriteBorder } from '@mui/icons-material';
+import {
+  Card,
+  CardContent,
+  IconButton,
+  Stack,
+  Typography,
+} from '@mui/material';
 import { Link } from 'react-router-dom';
 import { animated, useTrail } from 'react-spring';
 import { IProduct } from '../../../types/types';
@@ -27,14 +34,39 @@ export default function Product({
           </div>
         </Link>
         <CardContent className='product-content'>
-          <Link to={`/products/${product.id}`}>
-            <Typography variant='h6' className='product-name'>
-              {product?.name}
+          <Stack direction='row'>
+            <Link to={`/products/${product.id}`}>
+              <Typography variant='h6' className='product-name'>
+                {product.name}
+              </Typography>
+            </Link>
+            <Stack direction='row' sx={{ marginLeft: 'auto' }}>
+              <IconButton>
+                <FavoriteBorder color='inherit' fontSize='small' />
+              </IconButton>
+              <IconButton>
+                <AddShoppingCartOutlined color='inherit' fontSize='small' />
+              </IconButton>
+            </Stack>
+          </Stack>
+          <Stack direction='row'>
+            <Typography variant='body2' mr='auto' color='GrayText'>
+              {product.quantity !== 0 ? 'В наличии' : 'Нет в наличии'}
             </Typography>
-          </Link>
-          <Typography variant='body2'>
-            <em>{'₽' + product?.price + ' руб.'}</em>
-          </Typography>
+            {product.discount === 0 && (
+              <Typography variant='body2' mr={1}>
+                <em>{'₽' + product.price}</em>
+              </Typography>
+            )}
+            {product.discount !== 0 && (
+              <>
+                <Typography variant='body2' mr={1}>
+                  <em>₽{product.price * product.discount}</em>
+                  &nbsp;<s style={{ color: 'gray' }}>₽{product.price}</s>
+                </Typography>
+              </>
+            )}
+          </Stack>
         </CardContent>
       </Card>
     </animated.div>

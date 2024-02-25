@@ -1,4 +1,11 @@
-import { Box, Button, Container, TextField, Typography } from '@mui/material';
+import {
+  Box,
+  Button,
+  Container,
+  Link,
+  TextField,
+  Typography,
+} from '@mui/material';
 import React, { useState } from 'react';
 import { FormType } from '../../../types/types';
 import ShowAlert from '../../shared/ShowAlert';
@@ -125,7 +132,6 @@ export default function AuthForm({
               label='Имя пользователя'
               name='username'
               autoComplete='off'
-              autoFocus
               value={formData.username}
               onChange={handleChange}
               onBlur={handleBlur}
@@ -169,12 +175,12 @@ export default function AuthForm({
             {formType === FormType.Login
               ? 'Нет аккаунта? '
               : 'Уже есть аккаунт? '}
-            <a
+            <Link
               href='#'
               onClick={() => setActiveTab(formType === FormType.Login ? 1 : 0)}
             >
               {formType === FormType.Login ? 'Регистрация' : 'Вход'}
-            </a>
+            </Link>
           </p>
         </Box>
       </Box>

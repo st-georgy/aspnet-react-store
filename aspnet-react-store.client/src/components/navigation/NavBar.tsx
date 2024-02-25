@@ -1,5 +1,16 @@
-import { Search, ShoppingCart } from '@mui/icons-material';
-import { AppBar, Button, IconButton, Toolbar } from '@mui/material';
+import {
+  FavoriteBorder,
+  Search,
+  ShoppingCartOutlined,
+} from '@mui/icons-material';
+import {
+  AppBar,
+  Button,
+  IconButton,
+  Link,
+  Toolbar,
+  Tooltip,
+} from '@mui/material';
 import { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import logoSvg from '../../assets/logo.svg';
@@ -37,9 +48,9 @@ export default function NavBar({
         />
 
         <Toolbar>
-          <a href='/'>
+          <Link href='/'>
             <img src={logoSvg} height='80' alt='Logo' />
-          </a>
+          </Link>
 
           <div
             style={{
@@ -49,18 +60,30 @@ export default function NavBar({
             }}
           >
             {showSearch && (
-              <IconButton color='inherit' onClick={handleSearchDrawerShow}>
-                <Search fontSize='large' />
-              </IconButton>
+              <Tooltip title='Поиск товаров' placement='bottom' arrow>
+                <IconButton color='inherit' onClick={handleSearchDrawerShow}>
+                  <Search fontSize='large' />
+                </IconButton>
+              </Tooltip>
             )}
 
-            <IconButton color='inherit'>
-              <ShoppingCart fontSize='large' />
-            </IconButton>
+            {currentUser && (
+              <>
+                <Tooltip title='Корзина' placement='bottom' arrow>
+                  <IconButton color='inherit' href='/cart'>
+                    <ShoppingCartOutlined fontSize='large' />
+                  </IconButton>
+                </Tooltip>
+                <Tooltip title='Избранное' placement='bottom' arrow>
+                  <IconButton color='inherit' href='/favorites'>
+                    <FavoriteBorder fontSize='large' />
+                  </IconButton>
+                </Tooltip>
+                <UserMenu currentUser={currentUser} isAdmin={isAdmin} />
+              </>
+            )}
 
-            {currentUser ? (
-              <UserMenu currentUser={currentUser} isAdmin={isAdmin} />
-            ) : (
+            {!currentUser && (
               <Button
                 variant='outlined'
                 style={{ width: '169px', marginLeft: '20px' }}

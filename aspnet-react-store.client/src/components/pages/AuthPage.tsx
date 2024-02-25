@@ -1,4 +1,4 @@
-import { Container } from '@mui/material';
+import { Container, Link } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import logoSvg from '../../assets/logo.svg';
@@ -36,14 +36,14 @@ export default function AuthPage() {
 
   return (
     <>
-      <a href='/' style={{ position: 'absolute' }}>
+      <Link href='/' style={{ position: 'absolute' }}>
         Вернуться на главную
-      </a>
+      </Link>
       <Container>
         <div style={{ textAlign: 'center' }}>
-          <a href='/'>
+          <Link href='/'>
             <img src={logoSvg} height='90' alt='Logo' />
-          </a>
+          </Link>
         </div>
 
         <Tabs value={activeTab} onChange={handleChange} />

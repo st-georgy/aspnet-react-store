@@ -7,7 +7,10 @@ export interface IProduct {
   id: number;
   name: string;
   price: number;
+  quantity: number;
+  discount: number;
   description?: string | null;
+  categories: ICategory[];
   images: IImage[];
 }
 

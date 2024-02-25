@@ -6,6 +6,7 @@ import {
   Menu,
   MenuItem,
   Paper,
+  Tooltip,
 } from '@mui/material';
 import { useState } from 'react';
 import { IUser } from '../../types/types';
@@ -35,9 +36,11 @@ export default function UserMenu({ currentUser, isAdmin }: UserMenuProps) {
 
   return (
     <>
-      <IconButton onClick={handleMenu} color='inherit'>
-        <AccountCircle fontSize='large' />
-      </IconButton>
+      <Tooltip title='Профиль' placement='bottom' arrow>
+        <IconButton onClick={handleMenu} color='inherit'>
+          <AccountCircle fontSize='large' />
+        </IconButton>
+      </Tooltip>
       <Menu
         sx={{ mt: '45px' }}
         id='menu-appbar'

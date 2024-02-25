@@ -47,10 +47,6 @@ a:visited {
   text-decoration: none !important;
 }
 
-a:visited {
-  color: #1873d5;
-}
-
 .MuiMenuItem-root {
   color: black !important;
 }

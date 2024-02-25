@@ -61,7 +61,7 @@ namespace aspnet_react_store.Persistence
             {
                 new CategoryEntity { Name = "T-Shirts" },
                 new CategoryEntity { Name = "Pants" },
-                new CategoryEntity { Name = "Modern Clothes" }
+                new CategoryEntity { Name = "Oversize" }
             };
             await Categories.AddRangeAsync(categories);
 
@@ -73,8 +73,10 @@ namespace aspnet_react_store.Persistence
             await Users.AddRangeAsync(users);
 
             var products = new[] {
-                new ProductEntity { Name = "T-Shirt", Quantity = 5, Price = 2300, Categories = [categories[0], categories[2]] },
-                new ProductEntity { Name = "Jeans", Quantity = 1, Discount = 0.5m, Price = 4900, Categories = [categories[1]] },
+                new ProductEntity { Name = "T-Shirt", Quantity = 5, Price = 2300, Categories = [categories[0], categories[2]],
+                Description = "Aliquip nulla magna duis anim officia laborum adipisicing aliqua. Reprehenderit aute dolore adipisicing laboris magna enim voluptate labore dolore eu laborum culpa ut sunt. Aliqua cupidatat eiusmod" },
+                new ProductEntity { Name = "Jeans", Quantity = 1, Discount = 0.5m, Price = 4900, Categories = [categories[1]],
+                Description = "Aliquip nulla magna duis anim officia laborum adipisicing aliqua. Reprehenderit aute dolore adipisicing laboris magna enim voluptate labore dolore eu laborum culpa ut sunt. Aliqua cupidatat eiusmod" },
             };
             await Products.AddRangeAsync(products);
 
