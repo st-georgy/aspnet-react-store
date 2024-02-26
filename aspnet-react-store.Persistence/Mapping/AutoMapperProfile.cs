@@ -1,8 +1,10 @@
 ﻿using AutoMapper;
 using aspnet_react_store.Domain.Models;
 using aspnet_react_store.Domain.Models.Enums;
+using aspnet_react_store.Domain.Models.Linking;
 using aspnet_react_store.Persistence.Entities;
 using aspnet_react_store.Persistence.Entities.Enums;
+using aspnet_react_store.Persistence.Entities.Linking;
 
 namespace aspnet_react_store.Persistence.Mapping
 {
@@ -17,6 +19,8 @@ namespace aspnet_react_store.Persistence.Mapping
             CreateMap<Product, ProductEntity>().ReverseMap();
             CreateMap<User, UserEntity>().ReverseMap();
             CreateMap<UserInfo, UserInfoEntity>().ReverseMap();
+            CreateMap<ProductCart, ProductCartEntity>().ReverseMap();
+            CreateMap<ProductOrder, ProductOrderEntity>().ReverseMap();
             CreateMap<OrderStatus, OrderStatusEnum>().ReverseMap();
             CreateMap<UserRole, UserRoleEnum>().ReverseMap();
         }

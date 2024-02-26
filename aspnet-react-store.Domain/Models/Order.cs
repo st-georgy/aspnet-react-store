@@ -1,5 +1,6 @@
 ﻿using CSharpFunctionalExtensions;
 using aspnet_react_store.Domain.Models.Enums;
+using aspnet_react_store.Domain.Models.Linking;
 
 namespace aspnet_react_store.Domain.Models
 {
@@ -10,28 +11,28 @@ namespace aspnet_react_store.Domain.Models
         public int TotalProducts { get; }
         public decimal Discount { get; }
         public OrderStatus OrderStatus { get; }
-        public List<Product> Products { get; }
+        public List<ProductOrder> ProductOrders { get; }
 
         private Order(int id,
             decimal totalPrice,
             int totalProducts,
             decimal discount,
             OrderStatus orderStatus,
-            List<Product> products)
+            List<ProductOrder> productOrders)
         {
             Id = id;
             TotalPrice = totalPrice;
             TotalProducts = totalProducts;
             Discount = discount;
             OrderStatus = orderStatus;
-            Products = products;
+            ProductOrders = productOrders;
         }
 
         public static Result<Order> Create(int id,
             decimal totalPrice,
             int totalProducts,
             decimal discount,
-            List<Product> products,
+            List<ProductOrder> productOrders,
             OrderStatus orderStatus = OrderStatus.Pending)
         {
             if (id < 0)
@@ -46,7 +47,7 @@ namespace aspnet_react_store.Domain.Models
             if (discount > 1 || discount < 0)
                 return Result.Failure<Order>("Discount must be between 0 and 1.");
 
-            var order = new Order(id, totalPrice, totalProducts, discount, orderStatus, products);
+            var order = new Order(id, totalPrice, totalProducts, discount, orderStatus, productOrders);
 
             return Result.Success(order);
         }

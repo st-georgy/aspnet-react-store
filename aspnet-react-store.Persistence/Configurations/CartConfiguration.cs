@@ -29,22 +29,6 @@ namespace aspnet_react_store.Persistence.Configurations
             builder.HasOne(c => c.User)
                 .WithOne(c => c.Cart)
                 .HasForeignKey<CartEntity>(c => c.UserId);
-
-            builder.HasMany(c => c.Products)
-                .WithMany(p => p.Carts)
-                .UsingEntity<Dictionary<string, object>>(
-                    "ProductCart",
-                    r => r.HasOne<ProductEntity>()
-                        .WithMany()
-                        .HasForeignKey("ProductId"),
-                    l => l.HasOne<CartEntity>()
-                        .WithMany()
-                        .HasForeignKey("CartId"),
-                    j =>
-                    {
-                        j.HasKey("CartId", "ProductId");
-                        j.ToTable("ProductCart");
-                    });
         }
     }
 }

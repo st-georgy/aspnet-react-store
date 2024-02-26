@@ -1,4 +1,5 @@
 using aspnet_react_store.Persistence.Entities.Enums;
+using aspnet_react_store.Persistence.Entities.Linking;
 
 namespace aspnet_react_store.Persistence.Entities
 {
@@ -14,6 +15,6 @@ namespace aspnet_react_store.Persistence.Entities
         public int UserId { get; set; }
         public UserEntity User { get; set; } = null!;
 
-        public List<ProductEntity> Products = [];
+        public List<ProductOrderEntity> ProductOrders = [];
     }
 }

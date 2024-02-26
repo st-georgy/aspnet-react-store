@@ -1,7 +1,9 @@
 using Microsoft.EntityFrameworkCore;
 using aspnet_react_store.Persistence.Configurations;
+using aspnet_react_store.Persistence.Configurations.Linking;
 using aspnet_react_store.Persistence.Entities;
 using aspnet_react_store.Persistence.Entities.Enums;
+using aspnet_react_store.Persistence.Entities.Linking;
 
 namespace aspnet_react_store.Persistence
 {
@@ -15,6 +17,10 @@ namespace aspnet_react_store.Persistence
         public DbSet<UserEntity> Users { get; set; } = null!;
         public DbSet<UserInfoEntity> UserInfos { get; set; } = null!;
 
+        public DbSet<ProductCartEntity> ProductCarts { get; set; } = null!;
+        public DbSet<ProductOrderEntity> ProductOrders { get; set; } = null!;
+
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.HasPostgresEnum<UserRoleEnum>();
@@ -27,6 +33,9 @@ namespace aspnet_react_store.Persistence
             modelBuilder.ApplyConfiguration(new ProductConfiguration());
             modelBuilder.ApplyConfiguration(new UserConfiguration());
             modelBuilder.ApplyConfiguration(new UserInfoConfiguration());
+
+            modelBuilder.ApplyConfiguration(new ProductCartEntityConfiguration());
+            modelBuilder.ApplyConfiguration(new ProductOrderEntityConfiguration());
         }
 
         public override int SaveChanges()

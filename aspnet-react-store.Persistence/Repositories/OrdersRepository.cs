@@ -17,8 +17,10 @@ namespace aspnet_react_store.Persistence.Repositories
         {
             var orderEntities = await _context.Orders
                 .AsNoTracking()
-                .Include(o => o.Products)
+                .Include(o => o.ProductOrders)
+                    .ThenInclude(po => po.Order)
                 .Where(o => o.UserId == userId)
+                .AsSplitQuery()
                 .ToListAsync();
 
             return orderEntities.Count == 0 ? [] :

@@ -1,3 +1,5 @@
+using aspnet_react_store.Persistence.Entities.Linking;
+
 namespace aspnet_react_store.Persistence.Entities
 {
     public class CartEntity
@@ -10,6 +12,6 @@ namespace aspnet_react_store.Persistence.Entities
         public int UserId { get; set; }
         public UserEntity User { get; set; } = null!;
 
-        public List<ProductEntity> Products { get; set; } = [];
+        public List<ProductCartEntity> ProductCarts { get; set; } = [];
     }
 }
