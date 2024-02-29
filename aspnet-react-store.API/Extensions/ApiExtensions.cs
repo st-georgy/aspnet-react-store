@@ -40,6 +40,8 @@ namespace aspnet_react_store.API.Extensions
             services.AddScoped<IUsersService, UsersService>();
             services.AddScoped<IUserInfosService, UserInfosService>();
 
+            services.AddScoped<IProductCartsService, ProductCartsService>();
+
             services.AddScoped<ICartsRepository, CartsRepository>();
             services.AddScoped<ICategoriesRepository, CategoriesRepository>();
             services.AddScoped<IProductsRepository, ProductsRepository>();
@@ -47,6 +49,8 @@ namespace aspnet_react_store.API.Extensions
             services.AddScoped<IOrdersRepository, OrdersRepository>();
             services.AddScoped<IUsersRepository, UsersRepository>();
             services.AddScoped<IUserInfosRepository, UserInfosRepository>();
+
+            services.AddScoped<IProductCartsRepository, ProductCartsRepository>();
 
             services.AddAutoMapper(typeof(AutoMapperProfile));
         }

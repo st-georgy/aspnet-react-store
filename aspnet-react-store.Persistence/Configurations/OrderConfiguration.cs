@@ -13,13 +13,6 @@ namespace aspnet_react_store.Persistence.Configurations
 
             builder.HasKey(o => o.Id);
 
-            builder.Property(o => o.TotalPrice)
-                .HasPrecision(100, 2)
-                .HasDefaultValueSql("0");
-
-            builder.Property(o => o.TotalProducts)
-                .HasDefaultValueSql("0");
-
             builder.Property(o => o.Discount)
                 .HasPrecision(3, 2)
                 .HasDefaultValueSql("0");

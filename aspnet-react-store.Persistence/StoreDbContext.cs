@@ -81,6 +81,7 @@ namespace aspnet_react_store.Persistence
             };
             await Users.AddRangeAsync(users);
 
+
             var products = new[] {
                 new ProductEntity { Name = "T-Shirt", Quantity = 5, Price = 2300, Categories = [categories[0], categories[2]],
                 Description = "Aliquip nulla magna duis anim officia laborum adipisicing aliqua. Reprehenderit aute dolore adipisicing laboris magna enim voluptate labore dolore eu laborum culpa ut sunt. Aliqua cupidatat eiusmod" },
@@ -94,6 +95,14 @@ namespace aspnet_react_store.Persistence
                 new ImageEntity { FilePath = "/Images/products/1/2.png", Product = products[0] },
             };
             await Images.AddRangeAsync(images);
+
+            await SaveChangesAsync();
+
+            var productCarts = new[] {
+                new ProductCartEntity { CartId = 1, ProductId = 1, Quantity = 1 },
+                new ProductCartEntity { CartId = 1, ProductId = 2, Quantity = 3},
+            };
+            await ProductCarts.AddRangeAsync(productCarts);
 
             await SaveChangesAsync();
         }

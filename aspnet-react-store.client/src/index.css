@@ -71,3 +71,7 @@ a:visited {
 .options-grid h1 {
   margin-top: 0px !important;
 }
+
+.summary-field {
+  color: rgba(0, 0, 0, 0.6);
+}

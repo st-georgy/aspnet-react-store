@@ -1,3 +1,20 @@
+export interface ICart {
+  totalProducts: number;
+  totalPrice: number;
+  discount: number;
+  products: ICartProduct[];
+}
+
+export interface ICartProduct {
+  id: number;
+  name: string;
+  price: number;
+  quantity: number;
+  quantityInCart: number;
+  discount: number;
+  image?: IImage;
+}
+
 export interface ICategory {
   id: number;
   name: string;

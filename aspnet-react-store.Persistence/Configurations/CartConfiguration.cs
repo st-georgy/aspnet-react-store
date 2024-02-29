@@ -19,13 +19,6 @@ namespace aspnet_react_store.Persistence.Configurations
                 .HasPrecision(3, 2)
                 .HasDefaultValueSql("0");
 
-            builder.Property(c => c.TotalPrice)
-                .HasPrecision(100, 2)
-                .HasDefaultValueSql("0");
-
-            builder.Property(c => c.TotalProducts)
-                .HasDefaultValueSql("0");
-
             builder.HasOne(c => c.User)
                 .WithOne(c => c.Cart)
                 .HasForeignKey<CartEntity>(c => c.UserId);

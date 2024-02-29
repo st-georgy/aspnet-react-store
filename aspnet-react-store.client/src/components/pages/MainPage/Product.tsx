@@ -55,14 +55,15 @@ export default function Product({
             </Typography>
             {product.discount === 0 && (
               <Typography variant='body2' mr={1}>
-                <em>{'₽' + product.price}</em>
+                <em>{'₽' + product.price.toFixed(2)}</em>
               </Typography>
             )}
             {product.discount !== 0 && (
               <>
                 <Typography variant='body2' mr={1}>
-                  <em>₽{product.price * product.discount}</em>
-                  &nbsp;<s style={{ color: 'gray' }}>₽{product.price}</s>
+                  <em>₽{(product.price * product.discount).toFixed(2)}</em>
+                  &nbsp;
+                  <s style={{ color: 'gray' }}>₽{product.price.toFixed(2)}</s>
                 </Typography>
               </>
             )}

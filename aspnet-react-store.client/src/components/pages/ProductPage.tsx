@@ -39,10 +39,10 @@ export default function ProductPage({
   }, [id]);
 
   return error || !product ? (
-    !product ? (
-      <></>
-    ) : (
+    error ? (
       <NotFoundPage />
+    ) : (
+      <></>
     )
   ) : (
     <>

@@ -5,6 +5,7 @@ import '@fontsource/roboto/700.css';
 import { useEffect, useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import AuthPage from './components/pages/AuthPage';
+import CartPage from './components/pages/CartPage';
 import MainPage from './components/pages/MainPage';
 import NotFoundPage from './components/pages/NotFoundPage';
 import ProductPage from './components/pages/ProductPage';
@@ -59,6 +60,15 @@ export default function App() {
               }
             />
           )}
+          {isLoggedIn && (
+            <Route
+              path='/cart'
+              element={
+                <CartPage isAdmin={isAdmin} currentUser={currentUser!} />
+              }
+            />
+          )}
+          {!isLoggedIn && <Route path='/cart' element={<AuthPage />} />}
           {!isLoggedIn && <Route path='/profile' element={<AuthPage />} />}
           <Route
             path='/products/:id'

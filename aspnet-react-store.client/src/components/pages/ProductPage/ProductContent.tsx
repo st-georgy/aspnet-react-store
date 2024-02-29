@@ -78,14 +78,17 @@ export default function ProductContent({
             <Container sx={{ textAlign: 'right' }}>
               {product.discount === 0 && (
                 <Typography variant='h5' mt={5}>
-                  Цена: <em>₽{product.price} руб.</em>
+                  Цена: <em>₽{product.price.toFixed(2)} руб.</em>
                 </Typography>
               )}
               {product.discount !== 0 && (
                 <>
                   <Typography variant='h5' mt={5}>
-                    Цена: <em>₽{product.price * product.discount}</em>{' '}
-                    <s style={{ color: 'gray' }}>₽{product.price}</s>
+                    Цена:{' '}
+                    <em>
+                      ₽{(product.price * (1 - product.discount)).toFixed(2)}
+                    </em>{' '}
+                    <s style={{ color: 'gray' }}>₽{product.price.toFixed(2)}</s>
                   </Typography>
                   <Typography variant='body2' color='gray'>
                     Скидка: {product.discount * 100}%
